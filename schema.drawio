@@ -1,38 +1,70 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.9">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36" version="27.0.9" pages="2">
   <diagram name="Page-1" id="scxjZ3fZR60gItvvmdC6">
-    <mxGraphModel dx="1426" dy="751" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+    <mxGraphModel dx="1426" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-1" value="Planete - Generation" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="80" y="80" width="120" height="60" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-1" value="Rover" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="160" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-2" value="Rover - Déplacement" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="430" y="80" width="120" height="60" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-2" value="Mission control" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="160" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-3" value="Rover - Exploration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="590" y="80" width="120" height="60" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-3" value="Network" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="300" y="320" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-4" value="Mission Control - Suivi exploration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="410" y="280" width="120" height="60" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-4" value="Topologie" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="320" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-5" value="Mission Control - Déplacement du Rover" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="240" y="280" width="120" height="60" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-5" value="Tests" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="420" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-6" value="Responsable des ordres de&amp;nbsp; déplacements du rover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="255" y="380" width="90" height="30" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-11" value="Lib HTTP" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="70" y="420" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-7" value="Responsable de la visualisation des données récupérées" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="440" y="380" width="60" height="30" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-13" value="Pilote" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="50" y="80" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-8" value="Responsable de la grille à explorer" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="110" y="160" width="60" height="30" as="geometry" />
+        <mxCell id="qtqCem3ghHtSEltz-Iy9-15" value="Console" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="690" y="80" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-9" value="Responsable des capacités de déplacements" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="440" y="170" width="100" height="30" as="geometry" />
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="9gq3BP76IiO2pOSNOO-p" name="Page-2">
+    <mxGraphModel dx="1426" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="K23utA1-f0A50WB4uqL_-1" value="Planete - Generation" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="90" y="70" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="CZJZj1-FEGFRuc-YbBKr-10" value="Responsable de la communication après action avec MC" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
-          <mxGeometry x="620" y="180" width="60" height="30" as="geometry" />
+        <mxCell id="K23utA1-f0A50WB4uqL_-2" value="Rover - Déplacement" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="440" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-3" value="Rover - Exploration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="600" y="70" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-4" value="Mission Control - Suivi exploration" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="420" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-5" value="Mission Control - Déplacement du Rover" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="250" y="270" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-6" value="Responsable des ordres de&amp;nbsp; déplacements du rover" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="265" y="370" width="90" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-7" value="Responsable de la visualisation des données récupérées" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="370" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-8" value="Responsable de la grille à explorer" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="120" y="150" width="60" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-9" value="Responsable des capacités de déplacements" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="450" y="160" width="100" height="30" as="geometry" />
+        </mxCell>
+        <mxCell id="K23utA1-f0A50WB4uqL_-10" value="Responsable de la communication après action avec MC" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="630" y="170" width="60" height="30" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

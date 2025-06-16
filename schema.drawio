@@ -50,26 +50,26 @@
         <mxCell id="H0HyFhOCuxuWRMP3wpRV-6" value="EtatRover TournerAGauche()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="H0HyFhOCuxuWRMP3wpRV-2" vertex="1">
           <mxGeometry y="120" width="200" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="H0HyFhOCuxuWRMP3wpRV-7" value="Orientation : N | S | E | O&lt;div&gt;Position: (uint, uint)&lt;/div&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="40" y="240" width="140" height="30" as="geometry" />
+        <mxCell id="H0HyFhOCuxuWRMP3wpRV-7" value="&lt;div&gt;&lt;u&gt;EtatRover &lt;/u&gt;:&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;Orientation : N | S | E | O&lt;div&gt;Position: (uint, uint)&lt;/div&gt;" style="text;strokeColor=none;align=left;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="25" y="70" width="140" height="30" as="geometry" />
         </mxCell>
         <mxCell id="Lb8L1joS2DFJAqEphUJr-1" value="Topologie" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="490" y="400" width="200" height="90" as="geometry">
+          <mxGeometry x="490" y="400" width="220" height="90" as="geometry">
             <mxRectangle x="100" y="50" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="Lb8L1joS2DFJAqEphUJr-2" value="(Position, bool) PeutAvancer()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Lb8L1joS2DFJAqEphUJr-1" vertex="1">
-          <mxGeometry y="30" width="200" height="30" as="geometry" />
+        <mxCell id="Lb8L1joS2DFJAqEphUJr-2" value="(EtatRover, Boolean) PeutAvancer()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Lb8L1joS2DFJAqEphUJr-1" vertex="1">
+          <mxGeometry y="30" width="220" height="30" as="geometry" />
         </mxCell>
-        <mxCell id="Lb8L1joS2DFJAqEphUJr-3" value="(Position, bool) PeutReculer()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Lb8L1joS2DFJAqEphUJr-1" vertex="1">
-          <mxGeometry y="60" width="200" height="30" as="geometry" />
+        <mxCell id="Lb8L1joS2DFJAqEphUJr-3" value="(EtatRover, Boolean) PeutReculer()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="Lb8L1joS2DFJAqEphUJr-1" vertex="1">
+          <mxGeometry y="60" width="220" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8jnyCSQEteWQgkKELuSX-1" value="Mission Control" style="swimlane;fontStyle=0;childLayout=stackLayout;horizontal=1;startSize=30;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="460" y="190" width="210" height="90" as="geometry">
             <mxRectangle x="100" y="50" width="70" height="30" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="8jnyCSQEteWQgkKELuSX-2" value="Case [ ] [ ] AfficherGrille()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="8jnyCSQEteWQgkKELuSX-1" vertex="1">
+        <mxCell id="8jnyCSQEteWQgkKELuSX-2" value="[ ] [ ] Case AfficherGrille()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="8jnyCSQEteWQgkKELuSX-1" vertex="1">
           <mxGeometry y="30" width="210" height="30" as="geometry" />
         </mxCell>
         <mxCell id="8jnyCSQEteWQgkKELuSX-3" value="[ ] Commande EnvoyerCommande()" style="text;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;spacingLeft=4;spacingRight=4;overflow=hidden;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;rotatable=0;whiteSpace=wrap;html=1;" parent="8jnyCSQEteWQgkKELuSX-1" vertex="1">

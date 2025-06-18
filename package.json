@@ -1,0 +1,23 @@
+{
+  "name": "projet-rover",
+  "version": "1.0.0",
+  "description": "Mettre en oeuvre une simulation réseau d’un Rover autonome capable de recevoir et exécuter des commandes à distance via une console de pilotage, en respectant une logique de mouvement sur une planète toroïdale, avec obstacles inconnus et possibilité de répéteurs réseau.",
+  "homepage": "https://github.com/pvayssier/archi_logiciel#readme",
+  "bugs": {
+    "url": "https://github.com/pvayssier/archi_logiciel/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvayssier/archi_logiciel.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "mqtt": "^5.13.1"
+  }
+}

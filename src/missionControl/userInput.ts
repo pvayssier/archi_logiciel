@@ -2,6 +2,30 @@ import {CommandEnum} from "./missionControl.interface";
 import * as readline from 'readline';
 import {UserInputInterface} from "./userInput.interface";
 
+function explainCommand(): void {
+  console.log('Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]')
+  console.log("Press ENTER after each commands")
+  console.log('Confirm your final entries with: [S, SEND]')
+}
+
+function getCommandByInput(input: string): CommandEnum | undefined {
+  if (['F', 'FORWARD'].includes(input)) {
+    return CommandEnum.FORWARD
+  }
+
+  if (['B', 'BACKWARD'].includes(input)) {
+    return CommandEnum.BACKWARD
+  }
+
+  if (['R', 'RIGHT'].includes(input)) {
+    return CommandEnum.RIGHT
+  }
+
+  if (['L', 'LEFT'].includes(input)) {
+    return CommandEnum.LEFT
+  }
+}
+
 export class UserInput implements UserInputInterface {
   waitForInput(): Promise<CommandEnum[]> {
     const rl = readline.createInterface({
@@ -11,9 +35,7 @@ export class UserInput implements UserInputInterface {
 
     return new Promise((resolve) => {
       const commands: CommandEnum[] = []
-      console.log('Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]')
-      console.log("Press ENTER after each commands")
-      console.log('Confirm your final entries with: [S, SEND]')
+      explainCommand()
 
       rl.on('line', (input: string) => {
         const upperCaseInput = input.trim().toUpperCase();
@@ -26,23 +48,11 @@ export class UserInput implements UserInputInterface {
           return;
         }
 
-        if (['F', 'FORWARD'].includes(upperCaseInput)) {
-          commands.push(CommandEnum.FORWARD)
-          errorMessage = ''
-        }
+        const command = getCommandByInput(upperCaseInput);
 
-        if (['B', 'BACKWARD'].includes(upperCaseInput)) {
-          commands.push(CommandEnum.BACKWARD)
-          errorMessage = ''
-        }
+        if (command) {
+          commands.push(command);
 
-        if (['R', 'RIGHT'].includes(upperCaseInput)) {
-          commands.push(CommandEnum.RIGHT)
-          errorMessage = ''
-        }
-
-        if (['L', 'LEFT'].includes(upperCaseInput)) {
-          commands.push(CommandEnum.LEFT)
           errorMessage = ''
         }
 

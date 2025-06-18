@@ -11,8 +11,9 @@ export class UserInput implements UserInputInterface {
 
     return new Promise((resolve) => {
       const commands: CommandEnum[] = []
-      console.log('Enter your commands, valid inputs : [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT')
-      console.log('Confirm your entries with : [S, SEND]')
+      console.log('Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]')
+      console.log("Press ENTER after each commands")
+      console.log('Confirm your final entries with: [S, SEND]')
 
       rl.on('line', (input: string) => {
         const upperCaseInput = input.trim().toUpperCase();
@@ -40,13 +41,13 @@ export class UserInput implements UserInputInterface {
           errorMessage = ''
         }
 
-        if (['L', 'FORWARD'].includes(upperCaseInput)) {
+        if (['L', 'LEFT'].includes(upperCaseInput)) {
           commands.push(CommandEnum.LEFT)
           errorMessage = ''
         }
 
         console.log(errorMessage)
-        console.log(`Commands in line : ${commands.join(', ')}`);
+        console.log(`Commands in line: ${commands.join(', ')}`);
       })
     })
   }

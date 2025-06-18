@@ -8,8 +8,14 @@ export class Console implements ConsoleInterface{
 
   public constructor(userInput: UserInput, map: Map) {
     this.map = map;
+    this.map.mapDisplay();
     this.userInput = userInput;
     this.explainCommand();
+
+    const randomX = Math.floor(Math.random() * 4);
+    const randomY = Math.floor(Math.random() * 4);
+    this.map.mapUpdate({ x: randomX, y: randomY });
+    this.map.mapDisplay();
   }
 
   explainCommand(): void {

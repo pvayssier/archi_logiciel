@@ -6,7 +6,7 @@ import {MissionControl} from "./missionControl/missionControl";
 
 const networkSender = new NetworkSender();
 const userInput = new UserInput();
-const map = new Map();
+const map = new Map(5);
 const console = new Console(userInput, map);
 const missionControl = new MissionControl(networkSender, console);
 missionControl.run()

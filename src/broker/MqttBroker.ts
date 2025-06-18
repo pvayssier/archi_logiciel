@@ -5,10 +5,8 @@ import { Broker } from './broker.interface';
 
 export class MqttBroker implements Broker {
   public client: mqtt.MqttClient;
-  private topicCallbacks: Map<
-    string,
-    (message: CommandRover[] | EtatRover) => void
-  > = new Map();
+  private commandCallback?: (message: CommandRover[]) => void;
+  private responseCallback?: (message: EtatRover) => void;
 
   constructor(brokerUrl: string, identifiant: string) {
     this.client = mqtt.connect(brokerUrl, {
@@ -20,39 +18,28 @@ export class MqttBroker implements Broker {
     });
 
     this.client.on('message', (topic, message) => {
-      const callback = this.topicCallbacks.get(topic);
-      if (callback) {
-        try {
-          console.log(message.toString());
-          console.log(JSON.parse(message.toString()));
-          const parsedMessage = JSON.parse(message.toString());
-          callback(parsedMessage);
-        } catch (error) {
-          console.error(
-            `[MQTT BROKER] Error parsing message on topic ${topic}:`,
-            error
-          );
-        }
-      } else {
-        console.warn(`[MQTT BROKER] No callback registered for topic ${topic}`);
+      const parsedMessage = JSON.parse(message.toString());
+
+      if (topic === 'commands' && this.commandCallback) {
+        this.commandCallback(parsedMessage);
+      } else if (topic === 'responses' && this.responseCallback) {
+        this.responseCallback(parsedMessage);
       }
     });
   }
 
   subscribeToCommands(callback: (commands: CommandRover[]) => void): void {
     this.client.subscribe('commands');
-    this.topicCallbacks.set('commands', (message) => {
-      const commands = JSON.parse(message.toString());
+    this.commandCallback = (commands) => {
       callback(commands);
-    });
+    };
   }
 
   subscribeToResponses(callback: (response: EtatRover) => void): void {
     this.client.subscribe('responses');
-    this.topicCallbacks.set('responses', (message) => {
-      const response = JSON.parse(message.toString());
+    this.responseCallback = (response) => {
       callback(response);
-    });
+    };
   }
 
   publishCommand(commands: CommandRover[]): void {
@@ -64,14 +51,16 @@ export class MqttBroker implements Broker {
   }
 }
 
-const brokerUrl = 'mqtt://172.20.10.3:1883'; // Change this to your MQTT broker URL
-const mqttBroker = new MqttBroker(brokerUrl, 'test');
-mqttBroker.subscribeToCommands((commands) => {
-  console.log('[MQTT BROKER] Received commands:', commands);
-});
+// Example usage:
 
-mqttBroker.publishCommand([
-  CommandRover.FORWARD,
-  CommandRover.LEFT,
-  CommandRover.RIGHT,
-]);
+// const brokerUrl = 'mqtt://172.20.10.3:1883'; // Change this to your MQTT broker URL
+// const mqttBroker = new MqttBroker(brokerUrl, 'test');
+// mqttBroker.subscribeToCommands((commands) => {
+//   console.log('[MQTT BROKER] Received commands:', commands);
+// });
+
+// mqttBroker.publishCommand([
+//   CommandRover.FORWARD,
+//   CommandRover.LEFT,
+//   CommandRover.RIGHT,
+// ]);

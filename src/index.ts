@@ -1,8 +1,12 @@
+import {Console} from "./missionControl/console";
 import {UserInput} from "./missionControl/userInput";
+import {Map} from "./missionControl/map";
 import {NetworkSender} from "./missionControl/networkSender";
 import {MissionControl} from "./missionControl/missionControl";
 
-const userInput = new UserInput();
 const networkSender = new NetworkSender();
-const missionControl = new MissionControl(userInput, networkSender);
+const userInput = new UserInput();
+const map = new Map();
+const console = new Console(userInput, map);
+const missionControl = new MissionControl(networkSender, console);
 missionControl.run()

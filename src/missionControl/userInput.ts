@@ -1,41 +1,34 @@
-import {CommandEnum} from "./missionControl.interface";
 import * as readline from 'readline';
 import {UserInputInterface} from "./userInput.interface";
+import { CommandRover } from '../model/CommandRover';
 
-function explainCommand(): void {
-  console.log('Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]')
-  console.log("Press ENTER after each commands")
-  console.log('Confirm your final entries with: [S, SEND]')
-}
-
-function getCommandByInput(input: string): CommandEnum | undefined {
+function getCommandByInput(input: string): CommandRover | undefined {
   if (['F', 'FORWARD'].includes(input)) {
-    return CommandEnum.FORWARD
+    return CommandRover.FORWARD
   }
 
   if (['B', 'BACKWARD'].includes(input)) {
-    return CommandEnum.BACKWARD
+    return CommandRover.BACKWARD
   }
 
   if (['R', 'RIGHT'].includes(input)) {
-    return CommandEnum.RIGHT
+    return CommandRover.RIGHT
   }
 
   if (['L', 'LEFT'].includes(input)) {
-    return CommandEnum.LEFT
+    return CommandRover.LEFT
   }
 }
 
 export class UserInput implements UserInputInterface {
-  waitForInput(): Promise<CommandEnum[]> {
+  waitForInput(): Promise<CommandRover[]> {
     const rl = readline.createInterface({
       input: process.stdin,
       output: process.stdout
     });
 
     return new Promise((resolve) => {
-      const commands: CommandEnum[] = []
-      explainCommand()
+      const commands: CommandRover[] = []
 
       rl.on('line', (input: string) => {
         const upperCaseInput = input.trim().toUpperCase();
@@ -52,7 +45,6 @@ export class UserInput implements UserInputInterface {
 
         if (command) {
           commands.push(command);
-
           errorMessage = ''
         }
 

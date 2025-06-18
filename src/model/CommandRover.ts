@@ -1,4 +1,4 @@
-enum CommandRover {
+export enum CommandRover {
   FORWARD = 'F',
   BACKWARD = 'B',
   LEFT = 'L',

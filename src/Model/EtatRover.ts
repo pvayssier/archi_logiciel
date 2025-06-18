@@ -1,0 +1,5 @@
+interface EtatRover {
+  position: { x: number; y: number };
+  orientation: RoverOrientation;
+  successed: boolean;
+}

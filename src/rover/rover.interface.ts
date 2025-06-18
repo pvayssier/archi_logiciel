@@ -1,1 +1,3 @@
-interface Rover {}
+interface Rover {
+  followInstructions(instructions: [CommandRover]): EtatRover;
+}

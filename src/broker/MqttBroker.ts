@@ -3,6 +3,7 @@ import mqtt from "mqtt";
 
 export class MqttBroker implements IBroker {
   private client: mqtt.MqttClient;
+  private topicCallbacks: Map<string, (message: object) => void> = new Map();
 
   constructor(brokerUrl: string) {
     this.client = mqtt.connect(brokerUrl);
@@ -14,11 +15,9 @@ export class MqttBroker implements IBroker {
 
   subscribeToCommands(callback: (command: object) => void): void {
     this.client.subscribe("commands");
-    this.client.on("message", (topic, message) => {
-      if (topic === "commands") {
-        const cmd = JSON.parse(message.toString());
-        callback(cmd);
-      }
+    this.topicCallbacks.set("commands", (message) => {
+      const cmd = JSON.parse(message.toString());
+      callback(cmd);
     });
   }
 

@@ -22,7 +22,7 @@ export class Rover implements IRover {
     this.etat = {
       position: { x: 0, y: 0 },
       orientation: RoverOrientation.NORTH,
-      successed: false,
+      succeeded: false,
     };
 
     let roverPlaced = false;
@@ -114,13 +114,13 @@ export class Rover implements IRover {
       switch (command) {
         case CommandRover.FORWARD:
           if (!this.move(CommandRover.FORWARD)) {
-            this.etat.successed = false;
+            this.etat.succeeded = false;
             return this.etat;
           }
           break;
         case CommandRover.BACKWARD:
           if (!this.move(CommandRover.BACKWARD)) {
-            this.etat.successed = false;
+            this.etat.succeeded = false;
             return this.etat;
           }
           break;
@@ -132,7 +132,7 @@ export class Rover implements IRover {
           break;
       }
     }
-    this.etat.successed = true;
+    this.etat.succeeded = true;
     return this.etat;
   }
 }

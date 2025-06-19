@@ -22,6 +22,7 @@ export class Rover implements IRover {
     this.etat = {
       position: { x: 0, y: 0 },
       orientation: RoverOrientation.NORTH,
+      executedCommands: [],
       succeeded: false,
     };
 
@@ -113,6 +114,7 @@ export class Rover implements IRover {
   }
 
   followInstructions(instructions: CommandRover[]) {
+    this.etat.executedCommands = [];
     for (const command of instructions) {
       switch (command) {
         case CommandRover.FORWARD:
@@ -133,7 +135,12 @@ export class Rover implements IRover {
         case CommandRover.RIGHT:
           this.turnRight();
           break;
+        default:
+          console.error(`Unrecognized command: ${command}`);
+          this.etat.succeeded = false;
+          return this.etat;
       }
+      this.etat.executedCommands.push(command);
     }
     this.etat.succeeded = true;
     return this.etat;

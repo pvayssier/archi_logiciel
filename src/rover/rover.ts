@@ -47,6 +47,17 @@ export class Rover implements IRover {
 
     this.printGrid();
   }
+  private tryMove(
+    command: CommandRover.FORWARD | CommandRover.BACKWARD
+  ): boolean {
+    const success = this.move(command);
+    if (!success) {
+      this.etat.failedCommand = command;
+    } else {
+      this.etat.executedCommands.push(command);
+    }
+    return success;
+  }
 
   private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
     const { x, y } = this.etat.position;
@@ -118,9 +129,19 @@ export class Rover implements IRover {
     this.etat.failedCommand = null;
     for (const command of instructions) {
       switch (command) {
-        case CommandRover.FORWARD || CommandRover.BACKWARD:
-          if (!this.move(command)) {
-            this.etat.failedCommand = command;
+        case CommandRover.FORWARD:
+          if (!this.tryMove(CommandRover.FORWARD)) {
+            console.error(
+              `Failed to move forward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
+            return this.etat;
+          }
+          break;
+        case CommandRover.BACKWARD:
+          if (!this.tryMove(CommandRover.BACKWARD)) {
+            console.error(
+              `Failed to move backward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
             return this.etat;
           }
           break;

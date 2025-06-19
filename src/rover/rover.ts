@@ -5,7 +5,7 @@ import { Broker, MqttBroker } from "@broker";
 export class Rover implements IRover {
   private etat: EtatRover;
   private grid: CellType[][];
-  public broker: Broker; // Temporary public set to private after
+  private broker: Broker;
 
   private static readonly moveVectors: Record<
     RoverOrientation,
@@ -106,7 +106,7 @@ export class Rover implements IRover {
   }
 
   public getEtat(): EtatRover {
-    return this.etat;
+    return { ...this.etat };
   }
 
   followInstructions(instructions: CommandRover[]) {

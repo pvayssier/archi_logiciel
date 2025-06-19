@@ -135,6 +135,10 @@ export class Rover implements IRover {
         case CommandRover.RIGHT:
           this.turnRight();
           break;
+        default:
+          console.error(`Unrecognized command: ${command}`);
+          this.etat.succeeded = false;
+          return this.etat;
       }
       this.etat.executedCommands.push(command);
     }

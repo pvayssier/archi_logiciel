@@ -1,7 +1,7 @@
-export * from "./rover.interface";
+export { IRover } from "./rover.interface";
+
 // Example usage:
 
-import { EtatRover } from "@model";
 import { generateMap } from "./generate-map";
 import { Rover } from "./rover";
 

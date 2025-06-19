@@ -1,5 +1,5 @@
-export * from "./broker.interface";
-export * from "./mqtt-broker";
+export { Broker } from "./broker.interface";
+export { MqttBroker } from "./mqtt-broker";
 
 import { MqttBroker } from "./mqtt-broker";
 import { CommandRover } from "@model";

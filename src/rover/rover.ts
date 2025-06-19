@@ -23,7 +23,7 @@ export class Rover implements IRover {
       position: { x: 0, y: 0 },
       orientation: RoverOrientation.NORTH,
       executedCommands: [],
-      succeeded: false,
+      failedCommand: null,
     };
 
     let roverPlaced = false;
@@ -46,6 +46,17 @@ export class Rover implements IRover {
     });
 
     this.printGrid();
+  }
+  private tryMove(
+    command: CommandRover.FORWARD | CommandRover.BACKWARD
+  ): boolean {
+    const success = this.move(command);
+    if (!success) {
+      this.etat.failedCommand = command;
+    } else {
+      this.etat.executedCommands.push(command);
+    }
+    return success;
   }
 
   private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
@@ -115,17 +126,22 @@ export class Rover implements IRover {
 
   followInstructions(instructions: CommandRover[]) {
     this.etat.executedCommands = [];
+    this.etat.failedCommand = null;
     for (const command of instructions) {
       switch (command) {
         case CommandRover.FORWARD:
-          if (!this.move(CommandRover.FORWARD)) {
-            this.etat.succeeded = false;
+          if (!this.tryMove(CommandRover.FORWARD)) {
+            console.error(
+              `Failed to move forward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
             return this.etat;
           }
           break;
         case CommandRover.BACKWARD:
-          if (!this.move(CommandRover.BACKWARD)) {
-            this.etat.succeeded = false;
+          if (!this.tryMove(CommandRover.BACKWARD)) {
+            console.error(
+              `Failed to move backward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
             return this.etat;
           }
           break;
@@ -137,12 +153,10 @@ export class Rover implements IRover {
           break;
         default:
           console.error(`Unrecognized command: ${command}`);
-          this.etat.succeeded = false;
+          this.etat.failedCommand = command;
           return this.etat;
       }
-      this.etat.executedCommands.push(command);
     }
-    this.etat.succeeded = true;
     return this.etat;
   }
 

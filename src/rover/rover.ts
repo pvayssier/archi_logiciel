@@ -41,7 +41,10 @@ export class Rover implements IRover {
     this.broker.subscribeToCommands((commands: CommandRover[]) => {
       const result = this.followInstructions(commands);
       this.broker.publishResponse(result);
+      this.printGrid();
     });
+
+    this.printGrid();
   }
 
   private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
@@ -134,5 +137,15 @@ export class Rover implements IRover {
     }
     this.etat.succeeded = true;
     return this.etat;
+  }
+
+  private printGrid() {
+    console.log("Current grid state:");
+    console.log(
+      this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n")
+    );
+    console.log(
+      `Rover position: (${this.etat.position.x}, ${this.etat.position.y}), Orientation: ${this.etat.orientation}`
+    );
   }
 }

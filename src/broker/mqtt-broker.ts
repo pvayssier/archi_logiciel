@@ -14,7 +14,12 @@ export class MqttBroker implements Broker {
     });
 
     this.client.on("connect", () => {
-      console.log("[MQTT BROKER] Connected to", brokerUrl);
+      console.log(
+        "[MQTT BROKER] Connected to",
+        brokerUrl,
+        "with ID:",
+        identifiant
+      );
     });
 
     this.client.on("message", (topic, message) => {
@@ -50,5 +55,3 @@ export class MqttBroker implements Broker {
     this.client.publish("responses", JSON.stringify(response));
   }
 }
-
-

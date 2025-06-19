@@ -118,13 +118,7 @@ export class Rover implements IRover {
     this.etat.failedCommand = null;
     for (const command of instructions) {
       switch (command) {
-        case CommandRover.FORWARD:
-          if (!this.move(command)) {
-            this.etat.failedCommand = command;
-            return this.etat;
-          }
-          break;
-        case CommandRover.BACKWARD:
+        case CommandRover.FORWARD || CommandRover.BACKWARD:
           if (!this.move(command)) {
             this.etat.failedCommand = command;
             return this.etat;

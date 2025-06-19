@@ -23,17 +23,6 @@ export function generateMap(
 
     map.push(row);
   }
-
-  let roverPlaced = false;
-  while (!roverPlaced) {
-    const randY = Math.floor(Math.random() * height);
-    const randX = Math.floor(Math.random() * width);
-    if (map[randY][randX] === CellType.Empty) {
-      map[randY][randX] = CellType.Rover;
-      roverPlaced = true;
-    }
-  }
-
   return map;
 }
 

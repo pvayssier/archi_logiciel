@@ -1,6 +1,6 @@
-import { CellType } from "../models/CellType";
+import { CellType } from "../models/cell-type";
 
-const Noise = require('noisejs').Noise;
+const Noise = require("noisejs").Noise;
 
 export function generateMap(
   height: number,

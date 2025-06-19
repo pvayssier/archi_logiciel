@@ -1,6 +1,6 @@
-import { CommandRover } from '@model';
-import { EtatRover } from '@model';
+import { CommandRover } from "@model";
+import { EtatRover } from "@model";
 
-export interface Rover {
+export interface IRover {
   followInstructions(instructions: [CommandRover]): EtatRover;
 }

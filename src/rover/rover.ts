@@ -156,7 +156,6 @@ export class Rover implements IRover {
           this.etat.failedCommand = command;
           return this.etat;
       }
-      this.etat.executedCommands.push(command);
     }
     return this.etat;
   }

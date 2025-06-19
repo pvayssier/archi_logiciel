@@ -1,8 +1,8 @@
-import {UserInput} from "./userInput";
-import {ConsoleInterface} from "./console.interface";
-import {Map} from "./map";
+import { UserInput } from "./user-input";
+import { ConsoleInterface } from "./console.interface";
+import { Map } from "./map";
 
-export class Console implements ConsoleInterface{
+export class Console implements ConsoleInterface {
   public map: Map;
   public userInput: UserInput;
 

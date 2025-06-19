@@ -1,6 +1,6 @@
 import * as readline from 'readline';
-import { CommandRover } from '../models/CommandRover';
-import { UserInputInterface } from './userInput.interface';
+import { CommandRover } from '@model';
+import { UserInputInterface } from './user-input.interface';
 
 function getCommandByInput(input: string): CommandRover | undefined {
   if (['F', 'FORWARD'].includes(input)) {

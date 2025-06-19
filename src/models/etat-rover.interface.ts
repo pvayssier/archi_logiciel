@@ -1,4 +1,4 @@
-import { RoverOrientation } from './RoverOrientation';
+import { RoverOrientation } from './rover-orientation';
 
 export interface EtatRover {
   position: { x: number; y: number };

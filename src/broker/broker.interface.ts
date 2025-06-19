@@ -1,5 +1,5 @@
-import { CommandRover } from "../models/CommandRover";
-import { EtatRover } from "../models/EtatRover";
+import { CommandRover } from "@model";
+import { EtatRover } from "@model";
 
 export interface Broker {
   subscribeToCommands(callback: (commands: CommandRover[]) => void): void;

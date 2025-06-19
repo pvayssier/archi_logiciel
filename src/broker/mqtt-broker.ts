@@ -1,6 +1,6 @@
 import mqtt from 'mqtt';
-import { CommandRover } from '../models/CommandRover';
-import { EtatRover } from '../models/EtatRover';
+import { CommandRover } from '@model';
+import { EtatRover } from '@model';
 import { Broker } from './broker.interface';
 
 export class MqttBroker implements Broker {

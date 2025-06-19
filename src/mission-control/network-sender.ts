@@ -1,5 +1,5 @@
-import { CommandRover } from '../models/CommandRover';
-import { NetworkSenderInterface } from './networkSender.interface';
+import { CommandRover } from '@model';
+import { NetworkSenderInterface } from './network-sender.interface';
 
 export class NetworkSender implements NetworkSenderInterface {
   sendToBroker(commands: CommandRover[]): {

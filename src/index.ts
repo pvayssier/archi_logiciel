@@ -1,8 +1,8 @@
-import {Console} from "./missionControl/console";
-import {UserInput} from "./missionControl/userInput";
-import {Map} from "./missionControl/map";
-import {NetworkSender} from "./missionControl/networkSender";
-import {MissionControl} from "./missionControl/missionControl";
+import { Console } from "@missionControl";
+import { UserInput } from "@missionControl";
+import { Map } from "@missionControl";
+import { NetworkSender } from "@missionControl";
+import { MissionControl } from "./mission-control/mission-control";
 
 const networkSender = new NetworkSender();
 const userInput = new UserInput();

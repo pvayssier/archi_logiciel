@@ -1,6 +1,6 @@
-import {MissionControlInterface} from "./missionControl.interface";
-import {NetworkSender} from "./networkSender";
-import {Console} from "./console";
+import { MissionControlInterface } from "./mission-control.interface";
+import { NetworkSender } from "./network-sender";
+import { Console } from "./console";
 
 export class MissionControl implements MissionControlInterface {
   public networkSender: NetworkSender;

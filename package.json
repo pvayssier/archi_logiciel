@@ -16,6 +16,9 @@
   "main": "index.js",
   "scripts": {
     "start": "ts-node -r tsconfig-paths/register src/index.ts",
+    "start-broker": "ts-node -r tsconfig-paths/register src/broker/index.ts",
+    "start-rover": "ts-node -r tsconfig-paths/register src/rover/index.ts",
+    "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {

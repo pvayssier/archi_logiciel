@@ -1,6 +1,6 @@
 export enum RoverOrientation {
-  N = 'N',
-  E = 'E',
-  S = 'S',
-  W = 'W'
+  NORTH = "N",
+  EAST = "E",
+  SOUTH = "S",
+  WEST = "W",
 }

@@ -1,8 +1,13 @@
 import { RoverOrientation } from "./rover-orientation";
+import { SeenCell } from "rover/camera.inteface";
 import { CommandRover } from "./command-rover";
+
+export type Position = { x: number; y: number };
+
 export interface EtatRover {
-  position: { x: number; y: number };
+  position: Position;
   orientation: RoverOrientation;
+  seen: SeenCell[];
   executedCommands: CommandRover[];
   failedCommand: CommandRover | null;
 }

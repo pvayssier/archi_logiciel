@@ -8,6 +8,7 @@ export class Rover implements IRover {
   private grid: CellType[][];
   private broker: Broker;
   private camera: BasicCamera;
+  private debug: boolean;
 
   private static readonly moveVectors: Record<
     RoverOrientation,
@@ -19,13 +20,15 @@ export class Rover implements IRover {
     [RoverOrientation.WEST]: { dx: -1, dy: 0 },
   };
 
-  constructor(brokerUrl: string, grid: CellType[][]) {
+  constructor(brokerUrl: string, grid: CellType[][], debug = false) {
+    this.debug = debug;
     this.grid = grid;
     this.etat = {
       position: { x: 0, y: 0 },
       orientation: RoverOrientation.NORTH,
-      succeeded: false,
       seen: [],
+      executedCommands: [],
+      failedCommand: null,
     };
 
     let roverPlaced = false;
@@ -44,13 +47,35 @@ export class Rover implements IRover {
     this.broker.subscribeToCommands((commands: CommandRover[]) => {
       const result = this.followInstructions(commands);
       this.broker.publishResponse(result);
+      this.log("Rover state after commands:", result);
       this.printGrid();
     });
 
     this.camera = new BasicCamera(1);
     this.etat.seen = this.camera.look(this.etat.position, this.grid);
+    this.broker.publishResponse(this.etat);
+  }
 
-    this.printGrid();
+  private log(...args: any[]) {
+    if (this.debug) console.log(...args);
+  }
+  private error(...args: any[]) {
+    if (this.debug) console.error(...args);
+  }
+  public setDebug(enabled: boolean) {
+    this.debug = enabled;
+  }
+
+  private tryMove(
+    command: CommandRover.FORWARD | CommandRover.BACKWARD
+  ): boolean {
+    if (!this.move(command)) {
+      this.etat.failedCommand = command;
+      return false;
+    }
+    this.etat.executedCommands.push(command);
+    this.etat.seen = this.camera.look(this.etat.position, this.grid);
+    return true;
   }
 
   private getMoveVector(
@@ -123,21 +148,26 @@ export class Rover implements IRover {
 
   followInstructions(instructions: CommandRover[]) {
     this.etat.seen = [];
+    this.etat.executedCommands = [];
+    this.etat.failedCommand = null;
     for (const command of instructions) {
       switch (command) {
         case CommandRover.FORWARD:
-          if (!this.move(CommandRover.FORWARD)) {
-            this.etat.succeeded = false;
+          if (!this.tryMove(CommandRover.FORWARD)) {
+            this.error(
+              `Failed to move forward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
             return this.etat;
           }
-          this.etat.seen = this.camera.look(this.etat.position, this.grid);
+
           break;
         case CommandRover.BACKWARD:
-          if (!this.move(CommandRover.BACKWARD)) {
-            this.etat.succeeded = false;
+          if (!this.tryMove(CommandRover.BACKWARD)) {
+            this.error(
+              `Failed to move backward from position (${this.etat.position.x}, ${this.etat.position.y})`
+            );
             return this.etat;
           }
-          this.etat.seen = this.camera.look(this.etat.position, this.grid);
           break;
         case CommandRover.LEFT:
           this.turnLeft();
@@ -145,13 +175,17 @@ export class Rover implements IRover {
         case CommandRover.RIGHT:
           this.turnRight();
           break;
+        default:
+          this.error(`Unrecognized command: ${command}`);
+          this.etat.failedCommand = command;
+          return this.etat;
       }
     }
-    this.etat.succeeded = true;
     return this.etat;
   }
 
   private printGrid() {
+    if (!this.debug) return;
     console.log("Current grid state:");
     console.log(
       this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n")

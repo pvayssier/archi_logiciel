@@ -1,5 +1,4 @@
 export { IRover } from "./rover.interface";
-
 // Example usage:
 
 import { generateMap } from "./generate-map";

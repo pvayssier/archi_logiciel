@@ -1,11 +1,13 @@
 import { IRover } from "./rover.interface";
 import { CommandRover, CellType, EtatRover, RoverOrientation } from "@model";
 import { Broker, MqttBroker } from "@broker";
+import { BasicCamera } from "./camera";
 
 export class Rover implements IRover {
   private etat: EtatRover;
   private grid: CellType[][];
   private broker: Broker;
+  private camera: BasicCamera;
 
   private static readonly moveVectors: Record<
     RoverOrientation,
@@ -23,6 +25,7 @@ export class Rover implements IRover {
       position: { x: 0, y: 0 },
       orientation: RoverOrientation.NORTH,
       succeeded: false,
+      seen: [],
     };
 
     let roverPlaced = false;
@@ -44,19 +47,25 @@ export class Rover implements IRover {
       this.printGrid();
     });
 
+    this.camera = new BasicCamera(1);
+    this.etat.seen = this.camera.look(this.etat.position, this.grid);
+
     this.printGrid();
   }
 
-  private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
-    const { x, y } = this.etat.position;
-
+  private getMoveVector(
+    command: CommandRover.FORWARD | CommandRover.BACKWARD
+  ): { dx: number; dy: number } {
     let { dx, dy } = Rover.moveVectors[this.etat.orientation];
-
     if (command === CommandRover.BACKWARD) {
       dx = -dx;
       dy = -dy;
     }
-
+    return { dx, dy };
+  }
+  private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
+    const { x, y } = this.etat.position;
+    const { dx, dy } = this.getMoveVector(command);
     const numRows = this.grid.length;
     const numCols = this.grid[0].length;
 
@@ -113,6 +122,7 @@ export class Rover implements IRover {
   }
 
   followInstructions(instructions: CommandRover[]) {
+    this.etat.seen = [];
     for (const command of instructions) {
       switch (command) {
         case CommandRover.FORWARD:
@@ -120,12 +130,14 @@ export class Rover implements IRover {
             this.etat.succeeded = false;
             return this.etat;
           }
+          this.etat.seen = this.camera.look(this.etat.position, this.grid);
           break;
         case CommandRover.BACKWARD:
           if (!this.move(CommandRover.BACKWARD)) {
             this.etat.succeeded = false;
             return this.etat;
           }
+          this.etat.seen = this.camera.look(this.etat.position, this.grid);
           break;
         case CommandRover.LEFT:
           this.turnLeft();

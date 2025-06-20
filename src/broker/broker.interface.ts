@@ -1,17 +1,17 @@
 import { CommandRover } from "@model";
-import { EtatRover } from "@model";
-import { InitEtatRover } from "@model";
+import { StateRover } from "@model";
+import { InitStateRover } from "@model";
 
 export interface Broker {
   subscribeToCommands(callback: (commands: CommandRover[]) => void): void;
-  subscribeToEtat(callback: (etat: EtatRover) => void): void;
+  subscribeToState(callback: (state: StateRover) => void): void;
   subscribeToInitialization(
-    callback: (initEtatRover: InitEtatRover) => void
+    callback: (initStateRover: InitStateRover) => void
   ): void;
 
   publishCommand(commands: CommandRover[]): void;
-  publishEtat(etat: EtatRover): void;
-  publishInitialization(initEtatRover: InitEtatRover): void;
+  publishState(state: StateRover): void;
+  publishInitialization(initStateRover: InitStateRover): void;
 
   waitForConnection(): Promise<void>;
 }

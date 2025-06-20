@@ -1,7 +1,7 @@
 import { RoverOrientation } from "./rover-orientation";
-import { Position } from "./etat-rover.interface";
+import { Position } from "./state-rover.interface";
 
-export interface InitEtatRover {
+export interface InitStateRover {
   position: Position;
   orientation?: RoverOrientation;
   mapWidth: number;

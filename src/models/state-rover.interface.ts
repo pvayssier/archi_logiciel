@@ -4,7 +4,7 @@ import { CommandRover } from "./command-rover";
 
 export type Position = { x: number; y: number };
 
-export interface EtatRover {
+export interface StateRover {
   position: Position;
   orientation: RoverOrientation;
   lastCommand: CommandRover | null;

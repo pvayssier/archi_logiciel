@@ -41,6 +41,8 @@ export class Rover implements IRover {
         roverPlaced = true;
       }
     }
+    this.camera = new BasicCamera(1);
+    this.etat.seen = this.camera.look(this.etat.position, this.grid);
 
     this.broker = new MqttBroker(brokerUrl, "rover-broker");
 
@@ -51,9 +53,8 @@ export class Rover implements IRover {
       this.printGrid();
     });
 
-    this.camera = new BasicCamera(1);
-    this.etat.seen = this.camera.look(this.etat.position, this.grid);
     this.broker.publishResponse(this.etat);
+    this.printGrid();
   }
 
   private log(...args: any[]) {

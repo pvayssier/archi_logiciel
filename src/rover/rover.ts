@@ -2,12 +2,13 @@ import { IRover } from "./rover.interface";
 import { CommandRover, CellType, EtatRover, RoverOrientation } from "@model";
 import { Broker, MqttBroker } from "@broker";
 import { BasicCamera } from "./camera";
+import { Camera } from "./camera.inteface";
 
 export class Rover implements IRover {
   private etat: EtatRover;
   private grid: CellType[][];
   private broker: Broker;
-  private camera: BasicCamera;
+  private camera: Camera | undefined;
   private debug: boolean;
 
   private static readonly moveVectors: Record<
@@ -20,15 +21,23 @@ export class Rover implements IRover {
     [RoverOrientation.WEST]: { dx: -1, dy: 0 },
   };
 
-  constructor(brokerUrl: string, grid: CellType[][], debug = false) {
+  constructor(
+    brokerUrl: string,
+    grid: CellType[][],
+    enableCamera = true,
+    debug = false
+  ) {
     this.debug = debug;
     this.grid = grid;
     this.etat = {
       position: { x: 0, y: 0 },
-      orientation: RoverOrientation.NORTH,
+      orientation:
+        Object.values(RoverOrientation)[
+          Math.floor(Math.random() * Object.values(RoverOrientation).length)
+        ],
+      lastCommand: null,
+      successed: true,
       seen: [],
-      executedCommands: [],
-      failedCommand: null,
     };
 
     let roverPlaced = false;
@@ -41,20 +50,29 @@ export class Rover implements IRover {
         roverPlaced = true;
       }
     }
-    this.camera = new BasicCamera(1);
-    this.etat.seen = this.camera.look(this.etat.position, this.grid);
+    if (enableCamera) {
+      this.camera = new BasicCamera(1);
+      this.etat.seen = this.camera.look(this.etat.position, this.grid);
+    }
 
     this.broker = new MqttBroker(brokerUrl, "rover-broker");
 
-    this.broker.subscribeToCommands((commands: CommandRover[]) => {
-      const result = this.followInstructions(commands);
-      this.broker.publishResponse(result);
-      this.log("Rover state after commands:", result);
+    this.broker.waitForConnection().then(() => {
+      this.broker.publishInitialization({
+        position: this.etat.position,
+        orientation: this.etat.orientation,
+        mapWidth: this.grid[0].length,
+        mapHeight: this.grid.length,
+        debug: this.debug,
+        enableCamera: enableCamera,
+      });
       this.printGrid();
     });
 
-    this.broker.publishResponse(this.etat);
-    this.printGrid();
+    this.broker.subscribeToCommands((commands: CommandRover[]) => {
+      this.followInstructions(commands);
+      this.printGrid();
+    });
   }
 
   private log(...args: any[]) {
@@ -67,18 +85,6 @@ export class Rover implements IRover {
     this.debug = enabled;
   }
 
-  private tryMove(
-    command: CommandRover.FORWARD | CommandRover.BACKWARD
-  ): boolean {
-    if (!this.move(command)) {
-      this.etat.failedCommand = command;
-      return false;
-    }
-    this.etat.executedCommands.push(command);
-    this.etat.seen = this.camera.look(this.etat.position, this.grid);
-    return true;
-  }
-
   private getMoveVector(
     command: CommandRover.FORWARD | CommandRover.BACKWARD
   ): { dx: number; dy: number } {
@@ -89,6 +95,7 @@ export class Rover implements IRover {
     }
     return { dx, dy };
   }
+
   private move(command: CommandRover.FORWARD | CommandRover.BACKWARD): boolean {
     const { x, y } = this.etat.position;
     const { dx, dy } = this.getMoveVector(command);
@@ -143,31 +150,46 @@ export class Rover implements IRover {
     }
   }
 
-  public getEtat(): EtatRover {
-    return { ...this.etat };
+  private printGrid() {
+    if (!this.debug) return;
+    console.log("Current grid state:");
+    console.log(
+      this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n")
+    );
+    console.log(
+      `Rover position: (${this.etat.position.x}, ${this.etat.position.y}), Orientation: ${this.etat.orientation}`
+    );
   }
 
   followInstructions(instructions: CommandRover[]) {
     this.etat.seen = [];
-    this.etat.executedCommands = [];
-    this.etat.failedCommand = null;
     for (const command of instructions) {
+      this.etat.lastCommand = command;
       switch (command) {
         case CommandRover.FORWARD:
-          if (!this.tryMove(CommandRover.FORWARD)) {
+          if (!this.move(CommandRover.FORWARD)) {
+            this.etat.successed = false;
             this.error(
               `Failed to move forward from position (${this.etat.position.x}, ${this.etat.position.y})`
             );
-            return this.etat;
+            this.broker.publishEtat(this.etat);
+            return;
           }
-
+          if (this.camera) {
+            this.etat.seen = this.camera.look(this.etat.position, this.grid);
+          }
           break;
         case CommandRover.BACKWARD:
-          if (!this.tryMove(CommandRover.BACKWARD)) {
+          if (!this.move(CommandRover.BACKWARD)) {
+            this.etat.successed = false;
             this.error(
               `Failed to move backward from position (${this.etat.position.x}, ${this.etat.position.y})`
             );
-            return this.etat;
+            this.broker.publishEtat(this.etat);
+            return;
+          }
+          if (this.camera) {
+            this.etat.seen = this.camera.look(this.etat.position, this.grid);
           }
           break;
         case CommandRover.LEFT:
@@ -178,21 +200,32 @@ export class Rover implements IRover {
           break;
         default:
           this.error(`Unrecognized command: ${command}`);
-          this.etat.failedCommand = command;
-          return this.etat;
+          this.etat.lastCommand = command;
+          this.etat.successed = false;
+          this.broker.publishEtat(this.etat);
+          return;
       }
+      this.etat.successed = true;
+      this.broker.publishEtat(this.etat);
     }
-    return this.etat;
+    this.log(
+      `Rover moved successfully to position (${this.etat.position.x}, ${this.etat.position.y}) facing ${this.etat.orientation}`
+    );
+    return;
   }
 
-  private printGrid() {
-    if (!this.debug) return;
-    console.log("Current grid state:");
-    console.log(
-      this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n")
-    );
-    console.log(
-      `Rover position: (${this.etat.position.x}, ${this.etat.position.y}), Orientation: ${this.etat.orientation}`
-    );
+  public getEtat(): EtatRover {
+    return { ...this.etat };
+  }
+
+  public getGrid(): CellType[][] {
+    return this.grid.map((row) => [...row]);
+  }
+
+  public setCamera(camera: Camera): void {
+    this.camera = camera;
+  }
+  public deleteCamera(): void {
+    this.camera = undefined;
   }
 }

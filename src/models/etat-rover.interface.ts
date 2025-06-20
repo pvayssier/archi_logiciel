@@ -7,7 +7,7 @@ export type Position = { x: number; y: number };
 export interface EtatRover {
   position: Position;
   orientation: RoverOrientation;
+  lastCommand: CommandRover | null;
+  successed: boolean;
   seen: SeenCell[];
-  executedCommands: CommandRover[];
-  failedCommand: CommandRover | null;
 }

@@ -19,21 +19,29 @@
     "start-broker": "ts-node -r tsconfig-paths/register src/broker/main.ts",
     "start-rover": "ts-node -r tsconfig-paths/register src/rover/index.ts",
     "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control/index.ts",
+    "dev:ui": "vite --config ui/vite.config.ts",
+    "build:ui": "vite build --config ui/vite.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "dependencies": {
     "eslint-import-resolver-typescript": "^4.4.3",
     "mqtt": "^5.13.1",
     "noisejs": "^2.1.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
     "readline": "^1.3.0"
   },
   "devDependencies": {
     "@types/noisejs": "^2.1.0",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
     "eslint": "^9.29.0",
     "eslint-plugin-import": "^2.31.0",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",
-    "typescript-eslint": "^8.34.1"
+    "typescript-eslint": "^8.34.1",
+    "vite": "^6.3.5"
   }
 }

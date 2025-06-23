@@ -1,0 +1,17 @@
+// ui/tsconfig.json
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "jsx": "react-jsx", // ou "react" si tu utilises React < 17
+    "module": "ESNext",
+    "target": "ESNext",
+    "moduleResolution": "node",
+    "isolatedModules": true,
+    "esModuleInterop": true,
+    "allowJs": true,
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {}
+  },
+  "include": ["src", "index.html"]
+}

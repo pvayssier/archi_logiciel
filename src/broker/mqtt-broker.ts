@@ -1,14 +1,14 @@
 import mqtt from "mqtt";
 import { CommandRover } from "@model";
-import { EtatRover } from "@model";
-import { InitEtatRover } from "@model";
+import { StateRover } from "@model";
+import { InitStateRover } from "@model";
 import { Broker } from "./broker.interface";
 
 export class MqttBroker implements Broker {
   public client: mqtt.MqttClient;
   private commandCallback?: (message: CommandRover[]) => void;
-  private etatCallback?: (message: EtatRover) => void;
-  private initializationCallback?: (message: InitEtatRover) => void;
+  private etatCallback?: (message: StateRover) => void;
+  private initializationCallback?: (message: InitStateRover) => void;
   private isConnected: boolean = false;
 
   constructor(brokerUrl: string, identifiant: string) {
@@ -57,7 +57,7 @@ export class MqttBroker implements Broker {
     };
   }
 
-  subscribeToEtat(callback: (etat: EtatRover) => void): void {
+  subscribeToState(callback: (etat: StateRover) => void): void {
     this.client.subscribe("etat");
     this.etatCallback = (etat) => {
       callback(etat);
@@ -65,7 +65,7 @@ export class MqttBroker implements Broker {
   }
 
   subscribeToInitialization(
-    callback: (initEtatRover: InitEtatRover) => void
+    callback: (initEtatRover: InitStateRover) => void
   ): void {
     this.client.subscribe("initialization");
     this.initializationCallback = (initEtatRover) => {
@@ -74,16 +74,17 @@ export class MqttBroker implements Broker {
   }
 
   publishCommand(commands: CommandRover[]): void {
-    this.client.publish("commands", JSON.stringify(commands));
+    console.log('in broker :', commands)
+    this.client.publish('commands', JSON.stringify(commands));
   }
 
-  publishEtat(etat: EtatRover): void {
+  publishState(etat: StateRover): void {
     this.client.publish("etat", JSON.stringify(etat), {
       retain: true,
     });
   }
 
-  publishInitialization(initEtatRover: InitEtatRover): void {
+  publishInitialization(initEtatRover: InitStateRover): void {
     this.client.publish("initialization", JSON.stringify(initEtatRover), {
       retain: true,
     });

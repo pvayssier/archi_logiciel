@@ -1,21 +1,16 @@
-import { UserInput } from "./user-input";
-import { ConsoleInterface } from "./console.interface";
-import { Map } from "./map";
+import {UserInput} from "./user-input";
+import {ConsoleInterface} from "./console.interface";
+import {Map} from "./map";
 
 export class Console implements ConsoleInterface {
   public map: Map;
   public userInput: UserInput;
 
-  public constructor(userInput: UserInput, map: Map) {
-    this.map = map;
+  public constructor() {
+    this.map = new Map(10);
     this.map.mapDisplay();
-    this.userInput = userInput;
+    this.userInput = new UserInput();
     this.explainCommand();
-
-    const randomX = Math.floor(Math.random() * 4);
-    const randomY = Math.floor(Math.random() * 4);
-    this.map.mapUpdate({ x: randomX, y: randomY });
-    this.map.mapDisplay();
   }
 
   explainCommand(): void {

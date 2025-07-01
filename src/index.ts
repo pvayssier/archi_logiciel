@@ -1,12 +1,5 @@
-import { Console } from "@missionControl";
-import { UserInput } from "@missionControl";
-import { Map } from "@missionControl";
-import { NetworkSender } from "@missionControl";
-import { MissionControl } from "./mission-control/mission-control";
+import { MissionControl } from "@missionControl";
 
-const networkSender = new NetworkSender();
-const userInput = new UserInput();
-const map = new Map(5);
-const console = new Console(userInput, map);
-const missionControl = new MissionControl(networkSender, console);
+const brokerUrl = "mqtt://127.0.0.1:1883";
+const missionControl = new MissionControl(brokerUrl);
 missionControl.run()

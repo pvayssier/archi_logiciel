@@ -1,14 +1,15 @@
 import { CommandRover } from '@model';
-import { NetworkSenderInterface } from './network-sender.interface';
+import { NetworkSenderInterface } from "@missionControl";
+import { Broker } from "@broker";
 
 export class NetworkSender implements NetworkSenderInterface {
-  sendToBroker(commands: CommandRover[]): {
-    position: [number, number];
-    orientation: string;
-    movedToEnd: boolean;
-  } {
-    console.log('broker', commands);
+  public broker: Broker;
 
-    return { position: [0, 0], orientation: 'N', movedToEnd: true };
+  public constructor(broker: Broker) {
+    this.broker = broker
+  }
+
+  sendToBroker(commands: CommandRover[]): void {
+    this.broker.publishCommand(commands);
   }
 }

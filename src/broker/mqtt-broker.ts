@@ -21,7 +21,7 @@ export class MqttBroker implements Broker {
         "[MQTT BROKER] Connected to",
         brokerUrl,
         "with ID:",
-        identifiant
+        identifiant,
       );
       this.isConnected = true;
     });
@@ -65,7 +65,7 @@ export class MqttBroker implements Broker {
   }
 
   subscribeToInitialization(
-    callback: (initEtatRover: InitStateRover) => void
+    callback: (initEtatRover: InitStateRover) => void,
   ): void {
     this.client.subscribe("initialization");
     this.initializationCallback = (initEtatRover) => {
@@ -74,8 +74,8 @@ export class MqttBroker implements Broker {
   }
 
   publishCommand(commands: CommandRover[]): void {
-    console.log('in broker :', commands)
-    this.client.publish('commands', JSON.stringify(commands));
+    console.log("in broker :", commands);
+    this.client.publish("commands", JSON.stringify(commands));
   }
 
   publishState(etat: StateRover): void {

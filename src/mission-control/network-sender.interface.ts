@@ -1,5 +1,5 @@
-import { CommandRover } from '@model';
+import { CommandRover } from "@model";
 
 export interface NetworkSenderInterface {
-  sendToBroker: (commands: CommandRover[]) => void
+  sendToBroker: (commands: CommandRover[]) => void;
 }

@@ -1,4 +1,4 @@
-import { CellType } from "../models/cell-type";
+import { CellType } from "@model";
 
 const Noise = require("noisejs").Noise;
 
@@ -6,7 +6,7 @@ export function generateMap(
   height: number,
   width: number,
   obstacleThreshold: number = 0.3,
-  scale: number = 10
+  scale: number = 10,
 ): CellType[][] {
   const noise = new Noise(Math.random());
   const map: CellType[][] = [];

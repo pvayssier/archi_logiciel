@@ -6,7 +6,7 @@ export interface Broker {
   subscribeToCommands(callback: (commands: CommandRover[]) => void): void;
   subscribeToState(callback: (state: StateRover) => void): void;
   subscribeToInitialization(
-    callback: (initStateRover: InitStateRover) => void
+    callback: (initStateRover: InitStateRover) => void,
   ): void;
 
   publishCommand(commands: CommandRover[]): void;

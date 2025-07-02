@@ -1,85 +1,112 @@
+import {
+  CellType,
+  InitStateRover,
+  MapCellType,
+  RoverCellType,
+  RoverOrientation,
+  SeenCell,
+  StateRover,
+} from "@model";
 import { MapInterface } from "./map.interface";
-import {InitStateRover, StateRover} from "@model";
-import { CommandRover, RoverOrientation } from "@model";
 
 export class Map implements MapInterface {
-  private readonly size: number;
-  private map: string[][] = [];
-  private roverPosition: { x: number; y: number } | null = null;
-  private roverOrientation: RoverOrientation | null = null;
+  private map: (MapCellType | string)[][] = [];
+  private roverPosition: { x: number; y: number } | undefined = undefined;
+  private roverOrientation: RoverOrientation | undefined = undefined;
+  private height: number = 0;
+  private width: number = 0;
 
-  constructor(size: number = 10) {
-    this.size = size;
+  private getRoverCellTypeByOrientation(orientation: RoverOrientation): string {
+    return RoverCellType[orientation];
   }
 
-  mapInit(initStateRover: InitStateRover): void {
+  private manageSeenCells(seenCells: SeenCell[]): void {
+    for (const cell of seenCells) {
+      this.map[cell.position.y][cell.position.x] =
+        cell.type === CellType.Obstacle
+          ? MapCellType.Obstacle
+          : MapCellType.Empty;
+    }
+  }
+
+  private manageObstacle(
+    newPosition: { x: number; y: number },
+    orientation: RoverOrientation,
+  ): void {
+    //todo: gerer pour fin de carte
+    const delta = {
+      [RoverOrientation.NORTH]: { x: 0, y: -1 },
+      [RoverOrientation.SOUTH]: { x: 0, y: 1 },
+      [RoverOrientation.EAST]: { x: 1, y: 0 },
+      [RoverOrientation.WEST]: { x: -1, y: 0 },
+    };
+
+    const direction = delta[this.roverOrientation!];
+    const obstaclePos = {
+      x: newPosition.x + direction.x,
+      y: newPosition.y + direction.y,
+    };
+
+    this.map[obstaclePos.y][obstaclePos.x] = MapCellType.Obstacle;
+    this.map[newPosition.y][newPosition.x] =
+      this.getRoverCellTypeByOrientation(orientation);
+  }
+
+  public mapInit(initStateRover: InitStateRover): void {
     this.map = [];
-    for (let i = 0; i < this.size; i++) {
+    for (let i = 0; i < initStateRover.mapHeight; i++) {
       this.map[i] = [];
-      for (let j = 0; j < this.size; j++) {
-        this.map[i][j] = "?";
+      for (let j = 0; j < initStateRover.mapWidth; j++) {
+        this.map[i][j] =
+          initStateRover.position.x === j && initStateRover.position.y === i
+            ? this.getRoverCellTypeByOrientation(
+                initStateRover.orientation ?? RoverOrientation.NORTH,
+              )
+            : MapCellType.Unknown;
       }
     }
-    this.roverPosition = null;
-    this.roverOrientation = null;
+
+    this.roverPosition = initStateRover.position;
+    this.roverOrientation = initStateRover.orientation;
+    this.height = initStateRover.mapHeight;
+    this.width = initStateRover.mapWidth;
   }
 
-  mapUpdate(etatRover: StateRover): void {
-    const newPosition = etatRover.position;
-    const newOrientation = etatRover.orientation;
+  public mapUpdate(stateRover: StateRover): void {
+    const newPosition = stateRover.position;
+    const newOrientation = stateRover.orientation;
 
-    if (
-        newPosition.x < 0 || newPosition.x >= this.size ||
-        newPosition.y < 0 || newPosition.y >= this.size
-    ) {
-      console.error("Position en dehors de la carte.");
+    this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
+    if (this.roverPosition) {
+      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.Empty;
+    }
+
+    this.roverPosition = { ...newPosition };
+
+    // Gestion obstacle si commande échouée
+    if (!stateRover.successed) {
+      this.manageObstacle(newPosition, stateRover.orientation);
+
       return;
     }
 
-    if (
-        this.roverPosition &&
-        (this.roverPosition.x !== newPosition.x || this.roverPosition.y !== newPosition.y)
-    ) {
-      this.map[this.roverPosition.y][this.roverPosition.x] = ".";
+    if (stateRover.seen.length) {
+      this.manageSeenCells(stateRover.seen);
     }
 
-    this.map[newPosition.y][newPosition.x] = "R";
-    this.roverPosition = { ...newPosition };
+    if (stateRover.isLastCommand) {
+      this.map[newPosition.y][newPosition.x] =
+        this.getRoverCellTypeByOrientation(stateRover.orientation);
+    }
 
     if (this.roverOrientation !== newOrientation) {
       this.roverOrientation = newOrientation;
       console.log(`Current rover orientation:  ${newOrientation}`);
     }
-
-    // Gestion obstacle si commande échouée
-    const failed = etatRover.successed;
-    if (failed === CommandRover.FORWARD || failed === CommandRover.BACKWARD) {
-      const delta = {
-        [RoverOrientation.NORTH]: { x: 0, y: -1 },
-        [RoverOrientation.SOUTH]: { x: 0, y: 1 },
-        [RoverOrientation.EAST]:  { x: 1, y: 0 },
-        [RoverOrientation.WEST]:  { x: -1, y: 0 },
-      };
-
-      const direction = delta[this.roverOrientation!];
-      const obstaclePos = {
-        x: newPosition.x + (failed === CommandRover.FORWARD ? direction.x : -direction.x),
-        y: newPosition.y + (failed === CommandRover.FORWARD ? direction.y : -direction.y),
-      };
-
-      if (
-          obstaclePos.x >= 0 && obstaclePos.x < this.size &&
-          obstaclePos.y >= 0 && obstaclePos.y < this.size
-      ) {
-        this.map[obstaclePos.y][obstaclePos.x] = "X";
-      } else {
-        console.warn("Obstacle en dehors des limites de la carte.");
-      }
-    }
   }
 
-  mapDisplay(): void {
-    for (let row of this.map) {
+  public mapDisplay(): void {
+    for (const row of this.map) {
       console.log(row.join(" "));
     }
   }

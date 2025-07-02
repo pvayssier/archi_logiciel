@@ -1,10 +1,5 @@
-export * from "./mission-control";
-export * from "./mission-control.interface";
-export * from "./user-input";
-export * from "./user-input.interface";
-export * from "./console";
-export * from "./console.interface";
-export * from "./map";
-export * from "./map.interface";
-export * from "./network-sender";
-export * from "./network-sender.interface";
+import { MissionControl } from "./mission-control";
+
+const brokerUrl = "mqtt://127.0.0.1:1883";
+const missionControl = new MissionControl(brokerUrl);
+missionControl.run();

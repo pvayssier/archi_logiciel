@@ -1,4 +1,9 @@
 module.exports = {
+  extends: [
+    'eslint:recommended',
+    'plugin:@typescript-eslint/recommended',
+    'prettier',
+  ],
   plugins: ['import'],
   rules: {
     // 🔒 Bloque tous les imports relatifs vers mission-control

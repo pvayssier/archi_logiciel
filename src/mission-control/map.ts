@@ -1,42 +1,112 @@
+import {
+  CellType,
+  InitStateRover,
+  MapCellType,
+  RoverCellType,
+  RoverOrientation,
+  SeenCell,
+  StateRover,
+} from "@model";
 import { MapInterface } from "./map.interface";
 
 export class Map implements MapInterface {
-  private readonly size: number;
-  private map: string[][] = [];
+  private map: (MapCellType | string)[][] = [];
+  private roverPosition: { x: number; y: number } | undefined = undefined;
+  private roverOrientation: RoverOrientation | undefined = undefined;
+  private height: number = 0;
+  private width: number = 0;
 
-  constructor(size: number = 10) {
-    this.size = size;
-    this.mapInit();
+  private getRoverCellTypeByOrientation(orientation: RoverOrientation): string {
+    return RoverCellType[orientation];
   }
 
-  mapInit(): void {
-    this.map = [];
-    for (let i = 0; i < this.size; i++) {
-      this.map[i] = [];
-      for (let j = 0; j < this.size; j++) {
-        this.map[i][j] = "?";
-      }
+  private manageSeenCells(seenCells: SeenCell[]): void {
+    for (const cell of seenCells) {
+      this.map[cell.position.y][cell.position.x] =
+        cell.type === CellType.Obstacle
+          ? MapCellType.Obstacle
+          : MapCellType.Empty;
     }
   }
 
-  mapUpdate(position: { x: number; y: number }): void {
-    console.log('position', position)
-    if (
-        position.x < 0 ||
-        position.x >= this.size ||
-        position.y < 0 ||
-        position.y >= this.size
-    ) {
-      console.error("Unknown map position");
+  private manageObstacle(
+    newPosition: { x: number; y: number },
+    orientation: RoverOrientation,
+  ): void {
+    //todo: gerer pour fin de carte
+    const delta = {
+      [RoverOrientation.NORTH]: { x: 0, y: -1 },
+      [RoverOrientation.SOUTH]: { x: 0, y: 1 },
+      [RoverOrientation.EAST]: { x: 1, y: 0 },
+      [RoverOrientation.WEST]: { x: -1, y: 0 },
+    };
+
+    const direction = delta[this.roverOrientation!];
+    const obstaclePos = {
+      x: newPosition.x + direction.x,
+      y: newPosition.y + direction.y,
+    };
+
+    this.map[obstaclePos.y][obstaclePos.x] = MapCellType.Obstacle;
+    this.map[newPosition.y][newPosition.x] =
+      this.getRoverCellTypeByOrientation(orientation);
+  }
+
+  public mapInit(initStateRover: InitStateRover): void {
+    this.map = [];
+    for (let i = 0; i < initStateRover.mapHeight; i++) {
+      this.map[i] = [];
+      for (let j = 0; j < initStateRover.mapWidth; j++) {
+        this.map[i][j] =
+          initStateRover.position.x === j && initStateRover.position.y === i
+            ? this.getRoverCellTypeByOrientation(
+                initStateRover.orientation ?? RoverOrientation.NORTH,
+              )
+            : MapCellType.Unknown;
+      }
+    }
+
+    this.roverPosition = initStateRover.position;
+    this.roverOrientation = initStateRover.orientation;
+    this.height = initStateRover.mapHeight;
+    this.width = initStateRover.mapWidth;
+  }
+
+  public mapUpdate(stateRover: StateRover): void {
+    const newPosition = stateRover.position;
+    const newOrientation = stateRover.orientation;
+
+    this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
+    if (this.roverPosition) {
+      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.Empty;
+    }
+
+    this.roverPosition = { ...newPosition };
+
+    // Gestion obstacle si commande échouée
+    if (!stateRover.successed) {
+      this.manageObstacle(newPosition, stateRover.orientation);
 
       return;
     }
 
-    this.map[position.y][position.x] = "R";
+    if (stateRover.seen.length) {
+      this.manageSeenCells(stateRover.seen);
+    }
+
+    if (stateRover.isLastCommand) {
+      this.map[newPosition.y][newPosition.x] =
+        this.getRoverCellTypeByOrientation(stateRover.orientation);
+    }
+
+    if (this.roverOrientation !== newOrientation) {
+      this.roverOrientation = newOrientation;
+      console.log(`Current rover orientation:  ${newOrientation}`);
+    }
   }
 
-  mapDisplay(): void {
-    for (let row of this.map) {
+  public mapDisplay(): void {
+    for (const row of this.map) {
       console.log(row.join(" "));
     }
   }

@@ -15,13 +15,11 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node -r tsconfig-paths/register src/index.ts",
     "start-broker": "ts-node -r tsconfig-paths/register src/broker/main.ts",
     "start-rover": "ts-node -r tsconfig-paths/register src/rover/index.ts",
     "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control/index.ts",
-    "dev:ui": "vite --config ui/vite.config.ts",
-    "build:ui": "vite build --config ui/vite.config.ts",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },
   "dependencies": {
     "eslint-import-resolver-typescript": "^4.4.3",
@@ -37,7 +35,9 @@
     "@types/react-dom": "^19.1.6",
     "@vitejs/plugin-react": "^4.5.2",
     "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-import": "^2.31.0",
+    "prettier": "^3.6.2",
     "ts-node": "^10.9.2",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.8.3",

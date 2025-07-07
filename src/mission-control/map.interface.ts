@@ -1,3 +1,6 @@
+import { StateRover } from "@model";
+
 export interface MapInterface {
-  mapDisplay: () => void
+  mapUpdate: (stateRover: StateRover) => void;
+  mapDisplay: () => void;
 }

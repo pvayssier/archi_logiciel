@@ -1,6 +1,6 @@
 export enum CommandRover {
-  FORWARD = 'F',
-  BACKWARD = 'B',
-  LEFT = 'L',
-  RIGHT = 'R'
+  FORWARD = "F",
+  BACKWARD = "B",
+  LEFT = "L",
+  RIGHT = "R",
 }

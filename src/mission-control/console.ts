@@ -6,21 +6,18 @@ export class Console implements ConsoleInterface {
   public map: Map;
   public userInput: UserInput;
 
-  public constructor(userInput: UserInput, map: Map) {
-    this.map = map;
+  public constructor() {
+    this.map = new Map();
     this.map.mapDisplay();
-    this.userInput = userInput;
+    this.userInput = new UserInput();
     this.explainCommand();
-
-    const randomX = Math.floor(Math.random() * 4);
-    const randomY = Math.floor(Math.random() * 4);
-    this.map.mapUpdate({ x: randomX, y: randomY });
-    this.map.mapDisplay();
   }
 
   explainCommand(): void {
-    console.log('Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]')
-    console.log("Press ENTER after each commands")
-    console.log('Confirm your final entries with: [S, SEND]')
+    console.log(
+      "Enter your commands, valid inputs: [F, FORWARD, B, BACKWARD, R, RIGHT, L, LEFT]",
+    );
+    console.log("Press ENTER after each commands");
+    console.log("Confirm your final entries with: [S, SEND]");
   }
 }

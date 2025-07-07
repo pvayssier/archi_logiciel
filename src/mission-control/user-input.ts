@@ -1,21 +1,21 @@
-import * as readline from 'readline';
-import { CommandRover } from '@model';
-import { UserInputInterface } from './user-input.interface';
+import * as readline from "readline";
+import { CommandRover } from "@model";
+import { UserInputInterface } from "./user-input.interface";
 
 function getCommandByInput(input: string): CommandRover | undefined {
-  if (['F', 'FORWARD'].includes(input)) {
+  if (["F", "FORWARD"].includes(input)) {
     return CommandRover.FORWARD;
   }
 
-  if (['B', 'BACKWARD'].includes(input)) {
+  if (["B", "BACKWARD"].includes(input)) {
     return CommandRover.BACKWARD;
   }
 
-  if (['R', 'RIGHT'].includes(input)) {
+  if (["R", "RIGHT"].includes(input)) {
     return CommandRover.RIGHT;
   }
 
-  if (['L', 'LEFT'].includes(input)) {
+  if (["L", "LEFT"].includes(input)) {
     return CommandRover.LEFT;
   }
 }
@@ -30,12 +30,12 @@ export class UserInput implements UserInputInterface {
     return new Promise((resolve) => {
       const commands: CommandRover[] = [];
 
-      rl.on('line', (input: string) => {
+      rl.on("line", (input: string) => {
         const upperCaseInput = input.trim().toUpperCase();
         let errorMessage = `${upperCaseInput} is an invalid input`;
 
-        if (['S', 'SEND'].includes(upperCaseInput)) {
-          console.log('Received commands :', commands);
+        if (["S", "SEND"].includes(upperCaseInput)) {
+          console.log("Received commands :", commands);
           rl.close();
           resolve(commands);
           return;
@@ -45,11 +45,11 @@ export class UserInput implements UserInputInterface {
 
         if (command) {
           commands.push(command);
-          errorMessage = '';
+          errorMessage = "";
         }
 
         console.log(errorMessage);
-        console.log(`Commands in line: ${commands.join(', ')}`);
+        console.log(`Commands in line: ${commands.join(", ")}`);
       });
     });
   }

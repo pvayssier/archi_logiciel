@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "eslint-import-resolver-typescript": "^4.4.3",
+    "lucide-react": "^0.525.0",
     "mqtt": "^5.13.1",
     "noisejs": "^2.1.0",
     "react": "^19.1.0",

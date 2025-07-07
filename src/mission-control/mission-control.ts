@@ -18,13 +18,18 @@ export class MissionControl implements MissionControlInterface {
     this.broker.subscribeToInitialization((initStateRover: InitStateRover) => {
       console.log("Initialization started", initStateRover);
       this.console.map.mapInit(initStateRover);
-      this.console.map.mapDisplay();
       console.log("Current rover orientation: ", initStateRover.orientation);
       this.console.explainCommand();
     });
 
     this.broker.subscribeToState((stateRover: StateRover) => {
       this.console.map.mapUpdate(stateRover);
+
+      if (!stateRover.lastCommand) {
+        this.console.map.mapDisplay();
+
+        return;
+      }
 
       if (!stateRover.isLastCommand && stateRover.successed) {
         return;

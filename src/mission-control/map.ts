@@ -91,7 +91,10 @@ export class Map implements MapInterface {
 
     this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
     if (this.roverPosition) {
-      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.Passed;
+      this.map[this.roverPosition.y][this.roverPosition.x] =
+        !stateRover.lastCommand
+          ? this.getRoverCellTypeByOrientation(stateRover.orientation)
+          : MapCellType.Passed;
     }
 
     this.roverPosition = { ...newPosition };

@@ -18,6 +18,8 @@
     "start-broker": "ts-node -r tsconfig-paths/register src/broker/main.ts",
     "start-rover": "ts-node -r tsconfig-paths/register src/rover/index.ts",
     "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control/index.ts",
+    "dev:ui": "vite --config ui/vite.config.ts",
+    "build:ui": "vite build --config ui/vite.config.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },

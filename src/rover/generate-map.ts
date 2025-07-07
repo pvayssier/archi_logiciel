@@ -6,7 +6,7 @@ export function generateMap(
   height: number,
   width: number,
   obstacleThreshold: number = 0.3,
-  scale: number = 10,
+  scale: number = 10
 ): CellType[][] {
   const noise = new Noise(Math.random());
   const map: CellType[][] = [];
@@ -17,7 +17,7 @@ export function generateMap(
     for (let x = 0; x < width; x++) {
       const noiseValue = noise.simplex2(x / scale, y / scale);
       const cell =
-        noiseValue > obstacleThreshold ? CellType.Obstacle : CellType.Empty;
+        noiseValue > obstacleThreshold ? CellType.OBSTACLE : CellType.EMPTY;
       row.push(cell);
     }
 

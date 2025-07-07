@@ -23,15 +23,15 @@ export class Map implements MapInterface {
   private manageSeenCells(seenCells: SeenCell[]): void {
     for (const cell of seenCells) {
       this.map[cell.position.y][cell.position.x] =
-        cell.type === CellType.Obstacle
-          ? MapCellType.Obstacle
-          : MapCellType.Empty;
+        cell.type === CellType.OBSTACLE
+          ? MapCellType.OBSTACLE
+          : MapCellType.EMPTY;
     }
   }
 
   private manageObstacle(
     newPosition: { x: number; y: number },
-    orientation: RoverOrientation,
+    orientation: RoverOrientation
   ): void {
     //todo: gerer pour fin de carte
     const delta = {
@@ -47,7 +47,7 @@ export class Map implements MapInterface {
       y: newPosition.y + direction.y,
     };
 
-    this.map[obstaclePos.y][obstaclePos.x] = MapCellType.Obstacle;
+    this.map[obstaclePos.y][obstaclePos.x] = MapCellType.OBSTACLE;
     this.map[newPosition.y][newPosition.x] =
       this.getRoverCellTypeByOrientation(orientation);
   }
@@ -60,9 +60,9 @@ export class Map implements MapInterface {
         this.map[i][j] =
           initStateRover.position.x === j && initStateRover.position.y === i
             ? this.getRoverCellTypeByOrientation(
-                initStateRover.orientation ?? RoverOrientation.NORTH,
+                initStateRover.orientation ?? RoverOrientation.NORTH
               )
-            : MapCellType.Unknown;
+            : MapCellType.UNKNOWN;
       }
     }
 
@@ -76,9 +76,9 @@ export class Map implements MapInterface {
     const newPosition = stateRover.position;
     const newOrientation = stateRover.orientation;
 
-    this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
+    this.map[newPosition.y][newPosition.x] = MapCellType.EMPTY;
     if (this.roverPosition) {
-      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.Empty;
+      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.EMPTY;
     }
 
     this.roverPosition = { ...newPosition };

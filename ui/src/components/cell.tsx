@@ -2,28 +2,29 @@ import React from "react";
 import { CellType } from "../../../src/models/cell-type";
 import { RoverOrientation } from "../../../src/models/rover-orientation";
 import { ArrowUp, ArrowRight, ArrowDown, ArrowLeft } from "lucide-react";
-
+import { Position } from "../../../src/models/state-rover.interface";
 export interface CellProps {
-  x: number;
-  y: number;
-  isRover: boolean;
   orientation?: RoverOrientation;
-  seenType?: CellType;
+  cellType?: CellType;
+  Position: Position;
 }
 
 export const Cell: React.FC<CellProps> = ({
-  x,
-  y,
-  isRover,
   orientation,
-  seenType,
+  cellType,
+  Position,
 }) => {
   const getBackgroundColor = (): string => {
-    if (isRover) return "bg-blue-500";
-    if (seenType === CellType.Obstacle) return "bg-gray-800";
-    if (seenType === CellType.Empty) return "bg-amber-200";
-    if (seenType === CellType.Rover) return "bg-purple-500";
-    return "bg-black";
+    switch (cellType) {
+      case CellType.ROVER:
+        return "bg-blue-500";
+      case CellType.OBSTACLE:
+        return "bg-amber-900";
+      case CellType.EMPTY:
+        return "bg-gray-200";
+      default:
+        return "bg-black";
+    }
   };
 
   const renderOrientation = (): React.ReactNode => {
@@ -46,8 +47,10 @@ export const Cell: React.FC<CellProps> = ({
   return (
     <div
       className={`w-8 h-8 border border-gray-300 flex items-center justify-center text-white ${getBackgroundColor()}`}
+      id={`${Position.x}:${Position.y}`}
+      data-debug={cellType}
     >
-      {isRover && renderOrientation()}
+      {CellType.ROVER == cellType && renderOrientation()}
     </div>
   );
 };

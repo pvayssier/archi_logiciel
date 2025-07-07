@@ -1,58 +1,59 @@
 import React from "react";
-import { Cell } from "./cell";
-import { CellType } from "../../../src/models/cell-type";
-import { SeenCell } from "../../../src/models/seen-cell";
 import { InitStateRover } from "../../../src/models/init-rover.interface";
 import { StateRover } from "../../../src/models/state-rover.interface";
+import { Cell } from "./cell";
+import { CellProps } from "./cell";
+import { Position } from "../../../src/models/state-rover.interface";
 
 interface MapProps {
-  state: StateRover;
   init: InitStateRover;
+  state: StateRover;
+  cellsMap: Map<String, CellProps>;
 }
 
-export const Map: React.FC<MapProps> = ({ state, init }) => {
-  const { mapWidth, mapHeight } = init;
-  const { position: roverPos, orientation, seen } = state;
+const WINDOW_RADIUS = 15;
 
-  const buildSeenMap = (): (CellType | undefined)[][] => {
-    const grid: (CellType | undefined)[][] = Array.from(
-      { length: mapHeight },
-      () => Array.from({ length: mapWidth }, () => undefined)
+export const Map = React.memo(function Map({
+  init,
+  state,
+  cellsMap,
+}: MapProps) {
+  const height = init.mapHeight;
+  const width = init.mapWidth;
+  const rows = [];
+
+  const roverX = state.position.x;
+  const roverY = state.position.y;
+
+  for (let dy = -WINDOW_RADIUS; dy <= WINDOW_RADIUS; dy++) {
+    const y = (roverY + dy + height) % height;
+    const row = [];
+
+    for (let dx = -WINDOW_RADIUS; dx <= WINDOW_RADIUS; dx++) {
+      const x = (roverX + dx + width) % width;
+      const cell = cellsMap.get(`${x}:${y}`);
+      const Position: Position = { x, y };
+
+      row.push(
+        <Cell
+          key={`cell-${dx}-${dy}`} // clé unique même si (x, y) répété
+          orientation={cell?.orientation}
+          cellType={cell?.cellType}
+          Position={Position}
+        />
+      );
+    }
+
+    rows.push(
+      <div key={`row-${dy}`} className="flex flex-row">
+        {row}
+      </div>
     );
-
-    seen.forEach((cell: SeenCell) => {
-      const { x, y } = cell.position;
-      if (y >= 0 && y < mapHeight && x >= 0 && x < mapWidth) {
-        grid[y][x] = cell.type;
-      }
-    });
-
-    return grid;
-  };
-
-  const seenGrid = buildSeenMap();
+  }
 
   return (
-    <div
-      className="grid"
-      style={{ gridTemplateColumns: `repeat(${mapWidth}, 2rem)` }}
-    >
-      {seenGrid.map((row, y) =>
-        row.map((cellType, x) => {
-          const isRover = roverPos.x === x && roverPos.y === y;
-
-          return (
-            <Cell
-              key={`${x}-${y}`}
-              x={x}
-              y={y}
-              isRover={isRover}
-              orientation={isRover ? orientation : undefined}
-              seenType={cellType}
-            />
-          );
-        })
-      )}
+    <div className="flex flex-col border border-gray-700 rounded-md bg-gray-900 p-2">
+      {rows}
     </div>
   );
-};
+});

@@ -1,5 +1,5 @@
 export enum MapCellType {
-  Empty = "O",
-  Obstacle = "X",
-  Unknown = "?",
+  EMPTY = "O",
+  OBSTACLE = "X",
+  UNKNOWN = "?",
 }

@@ -21,7 +21,7 @@ export class MqttBroker implements Broker {
         "[MQTT BROKER] Connected to",
         brokerUrl,
         "with ID:",
-        identifiant,
+        identifiant
       );
       this.isConnected = true;
     });
@@ -65,7 +65,7 @@ export class MqttBroker implements Broker {
   }
 
   subscribeToInitialization(
-    callback: (initStateRover: InitStateRover) => void
+    callback: (initEtatRover: InitStateRover) => void
   ): void {
     this.client.subscribe("initialization");
     this.initializationCallback = (initStateRover) => {

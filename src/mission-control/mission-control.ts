@@ -25,6 +25,11 @@ export class MissionControl implements MissionControlInterface {
 
     this.broker.subscribeToState((stateRover: StateRover) => {
       this.console.map.mapUpdate(stateRover);
+
+      if (!stateRover.isLastCommand && stateRover.successed) {
+        return;
+      }
+
       this.console.map.mapDisplay();
     });
   }

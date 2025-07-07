@@ -7,7 +7,7 @@ import { Broker } from "./broker.interface";
 export class MqttBroker implements Broker {
   public client: mqtt.MqttClient;
   private commandCallback?: (message: CommandRover[]) => void;
-  private etatCallback?: (message: StateRover) => void;
+  private stateCallback?: (message: StateRover) => void;
   private initializationCallback?: (message: InitStateRover) => void;
   private isConnected: boolean = false;
 
@@ -21,7 +21,7 @@ export class MqttBroker implements Broker {
         "[MQTT BROKER] Connected to",
         brokerUrl,
         "with ID:",
-        identifiant,
+        identifiant
       );
       this.isConnected = true;
     });
@@ -31,8 +31,8 @@ export class MqttBroker implements Broker {
 
       if (topic === "commands" && this.commandCallback) {
         this.commandCallback(parsedMessage);
-      } else if (topic === "etat" && this.etatCallback) {
-        this.etatCallback(parsedMessage);
+      } else if (topic === "state" && this.stateCallback) {
+        this.stateCallback(parsedMessage);
       } else if (topic === "initialization" && this.initializationCallback) {
         this.initializationCallback(parsedMessage);
       }
@@ -57,19 +57,19 @@ export class MqttBroker implements Broker {
     };
   }
 
-  subscribeToState(callback: (etat: StateRover) => void): void {
-    this.client.subscribe("etat");
-    this.etatCallback = (etat) => {
-      callback(etat);
+  subscribeToState(callback: (state: StateRover) => void): void {
+    this.client.subscribe("state");
+    this.stateCallback = (state) => {
+      callback(state);
     };
   }
 
   subscribeToInitialization(
-    callback: (initEtatRover: InitStateRover) => void,
+    callback: (initEtatRover: InitStateRover) => void
   ): void {
     this.client.subscribe("initialization");
-    this.initializationCallback = (initEtatRover) => {
-      callback(initEtatRover);
+    this.initializationCallback = (initStateRover) => {
+      callback(initStateRover);
     };
   }
 
@@ -78,14 +78,14 @@ export class MqttBroker implements Broker {
     this.client.publish("commands", JSON.stringify(commands));
   }
 
-  publishState(etat: StateRover): void {
-    this.client.publish("etat", JSON.stringify(etat), {
+  publishState(state: StateRover): void {
+    this.client.publish("state", JSON.stringify(state), {
       retain: true,
     });
   }
 
-  publishInitialization(initEtatRover: InitStateRover): void {
-    this.client.publish("initialization", JSON.stringify(initEtatRover), {
+  publishInitialization(initStateRover: InitStateRover): void {
+    this.client.publish("initialization", JSON.stringify(initStateRover), {
       retain: true,
     });
   }

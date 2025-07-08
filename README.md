@@ -11,8 +11,7 @@ Mettre en oeuvre une simulation réseau d’un Rover autonome capable de recevoi
 - Execution d'une séquence de commandes (mouvements)
 
 ### Communication
-Le Rover écoute sur un port réseau. Reçoit une séquence de commandes, et renvoie son état après chaque commande
-La communication se fait en HTTP REST
+Les échanges entre le rover et mission-control se font indirectement via une architecture pub/sub et donc un broker. Par exemple, lorsque rover est démarré, il s'abonne ("sub") à un topic recevant des commandes publiées ("pub") par mission-control. Dès qu'un message est publié, ce dernier est récupéré et lu par rover. Dans l'autre sens et de manière similaire, mission-control s'abonne à un topic où rover publie ses changements d'états après chaque commande.
 
 ### Interface : Mission Control
 La console de pilotage, permet d'envoyer les commandes individuelles, ou les séquences de commandes.

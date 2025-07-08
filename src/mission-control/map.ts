@@ -2,13 +2,26 @@ import {
   CellType,
   CommandRover,
   InitStateRover,
-  MapCellType,
-  RoverCellType,
   RoverOrientation,
   SeenCell,
   StateRover,
 } from "@model";
 import { MapInterface } from "./map.interface";
+
+export enum MapCellType {
+  Empty = "O",
+  Obstacle = "X",
+  Unknown = "?",
+  Passed = "-",
+}
+
+export const RoverCellType: Record<RoverOrientation, string> = {
+  [RoverOrientation.NORTH]: "^",
+  [RoverOrientation.SOUTH]: "v",
+  [RoverOrientation.EAST]: ">",
+  [RoverOrientation.WEST]: "<",
+};
+
 
 export class Map implements MapInterface {
   private map: (MapCellType | string)[][] = [];

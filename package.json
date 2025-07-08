@@ -16,8 +16,8 @@
   "main": "index.js",
   "scripts": {
     "start-broker": "ts-node -r tsconfig-paths/register src/broker/main.ts",
-    "start-rover": "ts-node -r tsconfig-paths/register src/rover/index.ts",
-    "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control/index.ts",
+    "start-rover": "ts-node -r tsconfig-paths/register src/rover-main.ts",
+    "start-mission-control": "ts-node -r tsconfig-paths/register src/mission-control-main.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md}\""
   },

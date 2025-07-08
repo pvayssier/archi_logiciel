@@ -1,8 +1,8 @@
-import { IRover } from "./rover.interface";
-import { CommandRover, CellType, StateRover, RoverOrientation } from "@model";
 import { Broker, MqttBroker } from "@broker";
-import { BasicCamera } from "./camera";
-import { Camera } from "./camera.inteface";
+import { BasicCamera } from "@camera";
+import { CellType, CommandRover, RoverOrientation, StateRover } from "@model";
+import { Camera } from "../camera/camera.inteface";
+import { IRover } from "./rover.interface";
 
 export class Rover implements IRover {
   private state: StateRover;

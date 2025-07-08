@@ -18,3 +18,6 @@ La communication se fait en HTTP REST
 La console de pilotage, permet d'envoyer les commandes individuelles, ou les séquences de commandes.
 L'affichage est une grille mis à jour après chaque mouvement avec la position actuelle du Rover, ainsi que les obstacles découverts.
 
+![interfaces](./images/interfaces.png)
+![schema](./images/schema.png)
+

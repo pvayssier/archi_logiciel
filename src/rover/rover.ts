@@ -1,10 +1,10 @@
-import { IRover } from "./rover.interface";
-import { CommandRover, CellType, StateRover, RoverOrientation } from "@model";
-import { Broker, MqttBroker } from "@broker";
-import { BasicCamera } from "./camera";
-import { Camera } from "./camera.inteface";
+import { CellType, CommandRover, RoverOrientation, StateRover } from "@model";
 
-export class Rover implements IRover {
+import { Broker } from "@broker";
+import { Camera } from "@camera";
+import { Rover } from "./rover.interface";
+
+export class MarsRover implements Rover {
   private state: StateRover;
   private grid: CellType[][];
   private broker: Broker;
@@ -93,7 +93,7 @@ export class Rover implements IRover {
   private getMoveVector(
     command: CommandRover.FORWARD | CommandRover.BACKWARD
   ): { dx: number; dy: number } {
-    let { dx, dy } = Rover.moveVectors[this.state.orientation];
+    let { dx, dy } = MarsRover.moveVectors[this.state.orientation];
     if (command === CommandRover.BACKWARD) {
       dx = -dx;
       dy = -dy;

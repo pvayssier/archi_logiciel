@@ -1,13 +1,28 @@
 import {
   CellType,
+  CommandRover,
   InitStateRover,
-  MapCellType,
-  RoverCellType,
   RoverOrientation,
   SeenCell,
   StateRover,
 } from "@model";
+
 import { MapInterface } from "./map.interface";
+
+export enum MapCellType {
+  EMPTY = "O",
+  OBSTACLE = "X",
+  UNKNOWN = "?",
+  PASSED = "-",
+}
+
+export const RoverCellType: Record<RoverOrientation, string> = {
+  [RoverOrientation.NORTH]: "^",
+  [RoverOrientation.SOUTH]: "v",
+  [RoverOrientation.EAST]: ">",
+  [RoverOrientation.WEST]: "<",
+};
+
 
 export class Map implements MapInterface {
   private map: (MapCellType | string)[][] = [];
@@ -22,6 +37,12 @@ export class Map implements MapInterface {
 
   private manageSeenCells(seenCells: SeenCell[]): void {
     for (const cell of seenCells) {
+      const currentPositionCell = this.map[cell.position.y][cell.position.x];
+
+      if (currentPositionCell === MapCellType.Passed) {
+        continue;
+      }
+
       this.map[cell.position.y][cell.position.x] =
         cell.type === CellType.OBSTACLE
           ? MapCellType.OBSTACLE
@@ -31,14 +52,16 @@ export class Map implements MapInterface {
 
   private manageObstacle(
     newPosition: { x: number; y: number },
-    orientation: RoverOrientation
+    orientation: RoverOrientation,
+    lastCommand: CommandRover | null,
   ): void {
-    //todo: gerer pour fin de carte
+    const backwardDelta = lastCommand !== CommandRover.BACKWARD ? 1 : -1;
+
     const delta = {
-      [RoverOrientation.NORTH]: { x: 0, y: -1 },
-      [RoverOrientation.SOUTH]: { x: 0, y: 1 },
-      [RoverOrientation.EAST]: { x: 1, y: 0 },
-      [RoverOrientation.WEST]: { x: -1, y: 0 },
+      [RoverOrientation.NORTH]: { x: 0, y: -1 * backwardDelta },
+      [RoverOrientation.SOUTH]: { x: 0, y: 1 * backwardDelta },
+      [RoverOrientation.EAST]: { x: 1 * backwardDelta, y: 0 },
+      [RoverOrientation.WEST]: { x: -1 * backwardDelta, y: 0 },
     };
 
     const direction = delta[this.roverOrientation!];
@@ -76,22 +99,35 @@ export class Map implements MapInterface {
     const newPosition = stateRover.position;
     const newOrientation = stateRover.orientation;
 
+<<<<<<< HEAD
     this.map[newPosition.y][newPosition.x] = MapCellType.EMPTY;
     if (this.roverPosition) {
       this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.EMPTY;
+=======
+    if (stateRover.seen.length) {
+      this.manageSeenCells(stateRover.seen);
+    }
+
+    this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
+    if (this.roverPosition) {
+      this.map[this.roverPosition.y][this.roverPosition.x] =
+        !stateRover.lastCommand
+          ? this.getRoverCellTypeByOrientation(stateRover.orientation)
+          : MapCellType.Passed;
+>>>>>>> main
     }
 
     this.roverPosition = { ...newPosition };
 
     // Gestion obstacle si commande échouée
     if (!stateRover.successed) {
-      this.manageObstacle(newPosition, stateRover.orientation);
+      this.manageObstacle(
+        newPosition,
+        stateRover.orientation,
+        stateRover.lastCommand,
+      );
 
       return;
-    }
-
-    if (stateRover.seen.length) {
-      this.manageSeenCells(stateRover.seen);
     }
 
     if (stateRover.isLastCommand) {

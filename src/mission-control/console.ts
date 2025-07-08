@@ -10,7 +10,6 @@ export class Console implements ConsoleInterface {
     this.map = new Map();
     this.map.mapDisplay();
     this.userInput = new UserInput();
-    this.explainCommand();
   }
 
   explainCommand(): void {

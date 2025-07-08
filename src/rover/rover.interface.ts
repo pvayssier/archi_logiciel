@@ -1,5 +1,5 @@
 import { CommandRover } from "@model";
 
-export interface IRover {
+export interface Rover {
   followInstructions(commands: CommandRover[]): void;
 }

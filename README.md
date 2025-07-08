@@ -12,6 +12,7 @@ Mettre en oeuvre une simulation réseau d’un Rover autonome capable de recevoi
 
 ### Communication
 Les échanges entre le rover et mission-control se font indirectement via une architecture pub/sub et donc un broker. Par exemple, lorsque rover est démarré, il s'abonne ("sub") à un topic recevant des commandes publiées ("pub") par mission-control. Dès qu'un message est publié, ce dernier est récupéré et lu par rover. Dans l'autre sens et de manière similaire, mission-control s'abonne à un topic où rover publie ses changements d'états après chaque commande.
+
 ### Bonus
 Ajout d'un module caméra, que le rover utilise pour voir autour de lui à chaque déplacement, celle-ci renvoie le type de chaque cellule à côté du rover.
 
@@ -19,6 +20,27 @@ Ajout d'un module caméra, que le rover utilise pour voir autour de lui à chaqu
 La console de pilotage, permet d'envoyer les commandes individuelles, ou les séquences de commandes.
 L'affichage est une grille mis à jour après chaque mouvement avec la position actuelle du Rover, ainsi que les obstacles découverts.
 
+### Commandes pour démarrer le projet
+
+Depuis la racine du projet :
+1. Démarrer le docker contenant le broker avant de lancer le reste :
+```
+docker compose up
+```
+
+2. Démarrer le rover :
+```
+npm run start-rover
+```
+
+3. Démarrer mission-control :
+```
+npm run start-mission-control
+```
+
+
+
+### Schéma et interfaces
 ![interfaces](./images/interfaces.png)
 ![schema](./images/schema.png)
 

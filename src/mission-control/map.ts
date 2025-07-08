@@ -23,7 +23,6 @@ export const RoverCellType: Record<RoverOrientation, string> = {
   [RoverOrientation.WEST]: "<",
 };
 
-
 export class Map implements MapInterface {
   private map: (MapCellType | string)[][] = [];
   private roverPosition: { x: number; y: number } | undefined = undefined;
@@ -39,7 +38,7 @@ export class Map implements MapInterface {
     for (const cell of seenCells) {
       const currentPositionCell = this.map[cell.position.y][cell.position.x];
 
-      if (currentPositionCell === MapCellType.Passed) {
+      if (currentPositionCell === MapCellType.PASSED) {
         continue;
       }
 
@@ -53,7 +52,7 @@ export class Map implements MapInterface {
   private manageObstacle(
     newPosition: { x: number; y: number },
     orientation: RoverOrientation,
-    lastCommand: CommandRover | null,
+    lastCommand: CommandRover | null
   ): void {
     const backwardDelta = lastCommand !== CommandRover.BACKWARD ? 1 : -1;
 
@@ -99,32 +98,25 @@ export class Map implements MapInterface {
     const newPosition = stateRover.position;
     const newOrientation = stateRover.orientation;
 
-<<<<<<< HEAD
-    this.map[newPosition.y][newPosition.x] = MapCellType.EMPTY;
-    if (this.roverPosition) {
-      this.map[this.roverPosition.y][this.roverPosition.x] = MapCellType.EMPTY;
-=======
     if (stateRover.seen.length) {
       this.manageSeenCells(stateRover.seen);
     }
 
-    this.map[newPosition.y][newPosition.x] = MapCellType.Empty;
+    this.map[newPosition.y][newPosition.x] = MapCellType.EMPTY;
     if (this.roverPosition) {
       this.map[this.roverPosition.y][this.roverPosition.x] =
         !stateRover.lastCommand
           ? this.getRoverCellTypeByOrientation(stateRover.orientation)
-          : MapCellType.Passed;
->>>>>>> main
+          : MapCellType.PASSED;
     }
 
     this.roverPosition = { ...newPosition };
 
-    // Gestion obstacle si commande échouée
     if (!stateRover.successed) {
       this.manageObstacle(
         newPosition,
         stateRover.orientation,
-        stateRover.lastCommand,
+        stateRover.lastCommand
       );
 
       return;

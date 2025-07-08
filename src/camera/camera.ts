@@ -1,5 +1,5 @@
 import { CellType, Position, SeenCell } from "@model";
-import { Camera } from "../camera/camera.inteface";
+import { Camera } from "./camera.interface";
 
 export class BasicCamera implements Camera {
   constructor(private readonly range: number = 1) {}

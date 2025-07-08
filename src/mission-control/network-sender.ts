@@ -1,6 +1,7 @@
 import { CommandRover } from "@model";
-import { NetworkSenderInterface } from "./network-sender.interface";
 import { Broker } from "@broker";
+
+import { NetworkSenderInterface } from "./network-sender.interface";
 
 export class NetworkSender implements NetworkSenderInterface {
   public broker: Broker;

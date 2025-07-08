@@ -1,10 +1,10 @@
-import { Broker, MqttBroker } from "@broker";
-import { BasicCamera } from "@camera";
 import { CellType, CommandRover, RoverOrientation, StateRover } from "@model";
-import { Camera } from "../camera/camera.inteface";
-import { IRover } from "./rover.interface";
 
-export class Rover implements IRover {
+import { Broker } from "@broker";
+import { Camera } from "@camera";
+import { Rover } from "./rover.interface";
+
+export class MarsRover implements Rover {
   private state: StateRover;
   private grid: CellType[][];
   private broker: Broker;
@@ -22,10 +22,10 @@ export class Rover implements IRover {
   };
 
   constructor(
-    brokerUrl: string,
+    broker: Broker,
     grid: CellType[][],
-    enableCamera = true,
-    debug = false,
+    camera?: Camera,
+    debug = false
   ) {
     this.debug = debug;
     this.grid = grid;
@@ -45,18 +45,18 @@ export class Rover implements IRover {
     while (!roverPlaced) {
       const randY = Math.floor(Math.random() * grid.length);
       const randX = Math.floor(Math.random() * grid[0].length);
-      if (this.grid[randY][randX] === CellType.Empty) {
-        this.grid[randY][randX] = CellType.Rover;
+      if (this.grid[randY][randX] === CellType.EMPTY) {
+        this.grid[randY][randX] = CellType.ROVER;
         this.state.position = { x: randX, y: randY };
         roverPlaced = true;
       }
     }
-    if (enableCamera) {
-      this.camera = new BasicCamera(1);
+    if (camera) {
+      this.camera = camera;
       this.state.seen = this.camera.look(this.state.position, this.grid);
     }
 
-    this.broker = new MqttBroker(brokerUrl, "rover-broker");
+    this.broker = broker;
 
     this.broker.waitForConnection().then(() => {
       this.broker.publishInitialization({
@@ -65,7 +65,7 @@ export class Rover implements IRover {
         mapWidth: this.grid[0].length,
         mapHeight: this.grid.length,
         debug: this.debug,
-        enableCamera: enableCamera,
+        enableCamera: !!this.camera,
       });
       if (this.camera) {
         this.state.seen = this.camera.look(this.state.position, this.grid);
@@ -91,9 +91,9 @@ export class Rover implements IRover {
   }
 
   private getMoveVector(
-    command: CommandRover.FORWARD | CommandRover.BACKWARD,
+    command: CommandRover.FORWARD | CommandRover.BACKWARD
   ): { dx: number; dy: number } {
-    let { dx, dy } = Rover.moveVectors[this.state.orientation];
+    let { dx, dy } = MarsRover.moveVectors[this.state.orientation];
     if (command === CommandRover.BACKWARD) {
       dx = -dx;
       dy = -dy;
@@ -110,12 +110,12 @@ export class Rover implements IRover {
     const newX = (x + dx + numCols) % numCols;
     const newY = (y + dy + numRows) % numRows;
 
-    if (this.grid[newY][newX] === CellType.Obstacle) {
+    if (this.grid[newY][newX] === CellType.OBSTACLE) {
       return false;
     }
 
-    this.grid[y][x] = CellType.Empty;
-    this.grid[newY][newX] = CellType.Rover;
+    this.grid[y][x] = CellType.EMPTY;
+    this.grid[newY][newX] = CellType.ROVER;
     this.state.position = { x: newX, y: newY };
 
     return true;
@@ -159,14 +159,14 @@ export class Rover implements IRover {
     if (!this.debug) return;
     console.log("Current grid state:");
     console.log(
-      this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n"),
+      this.grid.map((row) => row.map((cell) => cell).join(" ")).join("\n")
     );
     console.log(
-      `Rover position: (${this.state.position.x}, ${this.state.position.y}), Orientation: ${this.state.orientation}`,
+      `Rover position: (${this.state.position.x}, ${this.state.position.y}), Orientation: ${this.state.orientation}`
     );
   }
 
-  followInstructions(instructions: CommandRover[]) {
+  async followInstructions(instructions: CommandRover[]) {
     this.state.seen = [];
     for (const [index, command] of instructions.entries()) {
       this.state.isLastCommand = index === instructions.length - 1;
@@ -177,7 +177,7 @@ export class Rover implements IRover {
           if (!this.move(CommandRover.FORWARD)) {
             this.state.successed = false;
             this.error(
-              `Failed to move forward from position (${this.state.position.x}, ${this.state.position.y})`,
+              `Failed to move forward from position (${this.state.position.x}, ${this.state.position.y})`
             );
             this.broker.publishState(this.state);
             return;
@@ -190,7 +190,7 @@ export class Rover implements IRover {
           if (!this.move(CommandRover.BACKWARD)) {
             this.state.successed = false;
             this.error(
-              `Failed to move backward from position (${this.state.position.x}, ${this.state.position.y})`,
+              `Failed to move backward from position (${this.state.position.x}, ${this.state.position.y})`
             );
             this.broker.publishState(this.state);
             return;
@@ -214,9 +214,10 @@ export class Rover implements IRover {
       }
       this.state.successed = true;
       this.broker.publishState(this.state);
+      await new Promise((resolve) => setTimeout(resolve, 80));
     }
     this.log(
-      `Rover moved successfully to position (${this.state.position.x}, ${this.state.position.y}) facing ${this.state.orientation}`,
+      `Rover moved successfully to position (${this.state.position.x}, ${this.state.position.y}) facing ${this.state.orientation}`
     );
     return;
   }

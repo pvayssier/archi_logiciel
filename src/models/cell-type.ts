@@ -1,5 +1,5 @@
 export enum CellType {
-  Empty = 0,
-  Obstacle = 1,
-  Rover = 2,
+  EMPTY = 0,
+  OBSTACLE = 1,
+  ROVER = 2,
 }

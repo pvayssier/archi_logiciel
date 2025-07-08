@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/138.0.0.0 Safari/537.36" version="27.2.0" pages="3">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/137.0.0.0 Safari/537.36" version="27.2.0" pages="3">
   <diagram id="9gq3BP76IiO2pOSNOO-p" name="Interfaces">
     <mxGraphModel dx="1426" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
       <root>
@@ -68,33 +68,20 @@
     </mxGraphModel>
   </diagram>
   <diagram id="J81Gg2jAHjJusfN7NVAb" name="Schéma">
-    <mxGraphModel dx="2253" dy="777" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+    <mxGraphModel dx="2328" dy="818" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="3skYsoPNag0WieUOqAye-2" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="619" y="370" as="sourcePoint" />
-            <mxPoint x="569" y="460" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="619" y="460" />
-            </Array>
-          </mxGeometry>
-        </mxCell>
         <mxCell id="XvG8t8P62ixsHMbMYS3m-3" value="" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="259" y="320" width="310" height="310" as="geometry" />
-        </mxCell>
-        <mxCell id="XvG8t8P62ixsHMbMYS3m-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;" parent="1" source="XvG8t8P62ixsHMbMYS3m-1" target="XvG8t8P62ixsHMbMYS3m-3" edge="1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="570" y="290" as="targetPoint" />
-            <Array as="points">
-              <mxPoint x="620" y="280" />
-              <mxPoint x="620" y="377" />
-            </Array>
-          </mxGeometry>
+          <mxGeometry x="339.5" y="355" width="149" height="60" as="geometry" />
         </mxCell>
         <mxCell id="qrsX5RYBvf6ZLURnjBR0-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="XvG8t8P62ixsHMbMYS3m-1" target="qrsX5RYBvf6ZLURnjBR0-1" edge="1">
           <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="3euavBKyJTDdwTAybqXa-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.999;entryY=0.377;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="XvG8t8P62ixsHMbMYS3m-1" target="XvG8t8P62ixsHMbMYS3m-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="620" y="440" as="targetPoint" />
+          </mxGeometry>
         </mxCell>
         <mxCell id="XvG8t8P62ixsHMbMYS3m-1" value="Rover" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="670" y="250" width="120" height="60" as="geometry" />
@@ -105,24 +92,13 @@
         <mxCell id="XvG8t8P62ixsHMbMYS3m-2" value="Mission control / UI" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="30" y="250" width="120" height="60" as="geometry" />
         </mxCell>
-        <mxCell id="XvG8t8P62ixsHMbMYS3m-6" value="Initialisation" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="354" y="350" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3skYsoPNag0WieUOqAye-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="XvG8t8P62ixsHMbMYS3m-7" target="XvG8t8P62ixsHMbMYS3m-1">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="600" y="540" as="targetPoint" />
-          </mxGeometry>
-        </mxCell>
-        <mxCell id="XvG8t8P62ixsHMbMYS3m-7" value="Commands" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
-          <mxGeometry x="354" y="530" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="XvG8t8P62ixsHMbMYS3m-8" value="BROKER" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="384" y="280" width="60" height="30" as="geometry" />
+        <mxCell id="XvG8t8P62ixsHMbMYS3m-8" value="Broker" style="text;html=1;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="384" y="370" width="60" height="30" as="geometry" />
         </mxCell>
         <mxCell id="G-z-Gs4WxR5ZrTovAqfE-1" value="&lt;h3 style=&quot;text-align: left;&quot; data-end=&quot;888&quot; data-start=&quot;854&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;Avantages :&lt;/span&gt;&lt;/h3&gt;&lt;h3 style=&quot;text-align: left;&quot; data-end=&quot;888&quot; data-start=&quot;854&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;Les topics COMMANDS/RESPONSES permettent de tracer simplement ce qui a été envoyé et reçu, ce qui est très utile pour l’analyse et le débogage.&lt;/span&gt;&lt;/h3&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;Inconvénients :&lt;br&gt;&lt;br&gt;Beaucoup de complexité alors qu&#39;un appel direct pourrait être fait entre le mission control et le rover&amp;nbsp;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div style=&quot;text-align: left;&quot;&gt;&lt;span style=&quot;background-color: transparent; color: light-dark(rgb(0, 0, 0), rgb(255, 255, 255)); font-size: 12px; font-weight: normal;&quot;&gt;&lt;br&gt;&lt;/span&gt;&lt;/div&gt;&lt;div&gt;&lt;br&gt;&lt;/div&gt;" style="text;strokeColor=none;align=center;fillColor=none;html=1;verticalAlign=middle;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
-          <mxGeometry x="80" y="600" width="720" height="315" as="geometry" />
+          <mxGeometry x="90" y="585" width="720" height="315" as="geometry" />
         </mxCell>
-        <mxCell id="i3NhDZusbaDxF_bTOthF-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.75;entryDx=0;entryDy=0;" parent="1" source="XvG8t8P62ixsHMbMYS3m-2" target="XvG8t8P62ixsHMbMYS3m-3" edge="1">
+        <mxCell id="i3NhDZusbaDxF_bTOthF-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=-0.001;entryY=0.382;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" source="XvG8t8P62ixsHMbMYS3m-2" target="XvG8t8P62ixsHMbMYS3m-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
         <mxCell id="ondlwLUxOT9yADP4phTy-4" value="Envoi de commandes&lt;div&gt;Réception d&#39;informations&lt;/div&gt;&lt;div&gt;Affichage carte et position rover&lt;/div&gt;" style="ellipse;shape=cloud;whiteSpace=wrap;html=1;" parent="1" vertex="1">
@@ -252,16 +228,14 @@
             <mxRectangle width="89" height="40" as="alternateBounds" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="3skYsoPNag0WieUOqAye-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.25;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="3skYsoPNag0WieUOqAye-1" target="XvG8t8P62ixsHMbMYS3m-2">
-          <mxGeometry relative="1" as="geometry">
-            <mxPoint x="80" y="500" as="targetPoint" />
+        <mxCell id="3euavBKyJTDdwTAybqXa-2" value="" style="endArrow=none;dashed=1;html=1;rounded=0;" edge="1" parent="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="413.55" y="485" as="sourcePoint" />
+            <mxPoint x="413.55" y="415" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="3skYsoPNag0WieUOqAye-1" value="State" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
-          <mxGeometry x="354" y="440" width="120" height="60" as="geometry" />
-        </mxCell>
-        <mxCell id="3skYsoPNag0WieUOqAye-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.608;entryY=1.05;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="XvG8t8P62ixsHMbMYS3m-6" target="XvG8t8P62ixsHMbMYS3m-2">
-          <mxGeometry relative="1" as="geometry" />
+        <mxCell id="3euavBKyJTDdwTAybqXa-4" value="Container&lt;div&gt;MQTT&lt;/div&gt;" style="rhombus;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="371" y="480" width="86" height="90" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>

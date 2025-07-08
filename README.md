@@ -60,6 +60,30 @@ Les échanges entre le rover et mission-control se font indirectement via une ar
 La console de pilotage, permet d'envoyer les commandes individuelles, ou les séquences de commandes.
 L'affichage est une grille mis à jour après chaque mouvement avec la position actuelle du Rover, ainsi que les obstacles découverts.
 
+### Commandes pour démarrer le projet
+
+Depuis la racine du projet :
+
+1. Démarrer le docker contenant le broker avant de lancer le reste :
+
+```
+docker compose up
+```
+
+2. Démarrer le rover :
+
+```
+npm run start-rover
+```
+
+3. Démarrer mission-control :
+
+```
+npm run start-mission-control
+```
+
+### Schéma et interfaces
+
 ![interfaces](./images/interfaces.png)
 ![schema](./images/schema.png)
 
